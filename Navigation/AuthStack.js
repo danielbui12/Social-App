@@ -5,7 +5,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import LoginScreen from '../screen/LoginScreen';
 import OnBoardScreen from '../screen/OnBoardingScreen'
 import SignupScreen from '../screen/SingupScreen'
-import HomeScreen from '../screen/HomeScreen'
 
 const Stack = createStackNavigator();
 
@@ -52,7 +51,6 @@ function AuthStack() {
             }
           }}
         />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ header: () => null }} />
       </Stack.Navigator>
     )
   )

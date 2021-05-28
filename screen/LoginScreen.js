@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import FormInput from '../Components/FormInput'
 import SocialButton from '../Components/SocialButton'
 import FormButton from '../Components/FormButton'
 import { auth } from '../Constant/firebase'
+import { AuthContext } from '../Navigation/AuthProvider'
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
 
-    useEffect(() => {
-        const unsubcribe = auth.onAuthStateChanged((authUser) => {
-            if(authUser) {
-                navigation.replace("Home")
-            }
-        })
+    // useEffect(() => {
+    //     const unsubcribe = auth.onAuthStateChanged((authUser) => {
+    //         if(authUser) {
+    //             navigation.replace("Home")
+    //         }
+    //     })
 
-        return unsubcribe
-    }, [])
+    //     return unsubcribe
+    // }, [])
+
+    const {login} = useContext(AuthContext)
 
     return (
         <KeyboardAvoidingView  behavior={"padding"} style={styles.container}>
@@ -43,7 +46,7 @@ export default function LoginScreen({ navigation }) {
 
             <FormButton 
                 buttonTitle="Sign In"
-                onPress={() => {}}
+                onPress={() => login(email, pass)}
             />
 
             <TouchableOpacity style={styles.forgotButton}>
@@ -51,10 +54,10 @@ export default function LoginScreen({ navigation }) {
             </TouchableOpacity>
 
             <SocialButton 
-                buttonTitle="Sign In with Facebook"
-                buttonName="facebook"
-                color="#4867aa"
-                backgroundColor="#e6eaf4"
+                buttonTitle="Sign In with GitHub"
+                buttonName="github"
+                color="#fff"
+                backgroundColor="#23282c"
                 onPress={() => {}}
             />
 
