@@ -14,16 +14,6 @@ const Routes = () => {
         setInitialize(false)
     }
 
-    // useEffect(() => {
-    //     const unsubcribe = auth.onAuthStateChanged((authUser) => {
-    //         if(authUser) {
-    //             navigation.replace("Home")
-    //         }
-    //     })
-
-    //     return unsubcribe
-    // }, [])
-
     useEffect(() => {
         const unsubcribe = auth.onAuthStateChanged(onAuthStateChanged)
 

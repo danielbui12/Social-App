@@ -1,24 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import FormInput from '../Components/FormInput'
 import SocialButton from '../Components/SocialButton'
 import FormButton from '../Components/FormButton'
-import { auth } from '../Constant/firebase'
 import { AuthContext } from '../Navigation/AuthProvider'
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
-
-    // useEffect(() => {
-    //     const unsubcribe = auth.onAuthStateChanged((authUser) => {
-    //         if(authUser) {
-    //             navigation.replace("Home")
-    //         }
-    //     })
-
-    //     return unsubcribe
-    // }, [])
 
     const {login} = useContext(AuthContext)
 

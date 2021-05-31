@@ -3,7 +3,7 @@ import { View, Button, SafeAreaView, ScrollView } from 'react-native'
 import {AuthContext} from '../Navigation/AuthProvider'
 
 
-function HomeScreen() {
+function SettingScreen() {
 
     const { logOut } = useContext(AuthContext)
 
@@ -16,4 +16,4 @@ function HomeScreen() {
     )
 }
 
-export default HomeScreen
+export default SettingScreen

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
 import FormInput from '../Components/FormInput'
 import { auth } from '../Constant/firebase'
