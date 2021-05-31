@@ -12,8 +12,8 @@ const StoryScreen = () => {
       caption: "Hi there asdasdasdasdasdbas!",
       img: 'none',
       liked: false,
-      likes: '0',
-      comment: '0'
+      likes: 0,
+      comment: 4
     },
     {
       id: 1,
@@ -22,8 +22,8 @@ const StoryScreen = () => {
       caption: "Hi friends!",
       img: require("../images/1.jpg"),
       liked: false,
-      likes: '0',
-      comment: '0'
+      likes: 3,
+      comment: 0
     },
     {
       id: 2,
@@ -32,8 +32,8 @@ const StoryScreen = () => {
       caption: "Hello mother f*cker!",
       img: 'none',
       liked: true,
-      likes: '0',
-      comment: '0'
+      likes: 0,
+      comment: 0
     },
   ];
 

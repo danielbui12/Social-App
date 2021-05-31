@@ -16,6 +16,23 @@ import {
 } from "../screen/styled/styledComponent";
 
 const Post = ({ item }) => {
+  let liked = item.liked ? "heart" : "heart-outline"
+  let isPostPic, likes
+
+  if(item.img == "none") {
+    isPostPic = false
+  } else {
+    isPostPic = true
+  }
+
+  if(item.likes == 1) {
+    likes = "1 Like"
+  } else if(item.like > 1) {
+    likes = `${item.likes} Likes`
+  } else {
+    likes = "Like"
+  }
+
   return (
     <Card>
       <UserInfo>
@@ -28,12 +45,12 @@ const Post = ({ item }) => {
 
       <Caption>{item.caption}</Caption>
 
-      <PostImg source={item.img} />
+      {isPostPic ? <PostImg source={item.img} /> : <Divided/>}
 
       <InteractionWrapper>
-        <Interaction active>
-          <Ionicons name="heart" size={22} color={"#2e64e5"} />
-          <InteractionText active>Like</InteractionText>
+        <Interaction>
+          <Ionicons name={liked} size={22} />
+          <InteractionText>{likes}</InteractionText>
         </Interaction>
 
         <Interaction>
