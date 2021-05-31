@@ -12,27 +12,29 @@ export default function LoginScreen({ navigation }) {
     const {login} = useContext(AuthContext)
 
     return (
-        <KeyboardAvoidingView  behavior={"padding"} style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.logo}/>
 
-            <FormInput
-                labelVal={email}
-                onChangeText={userEmail => setEmail(userEmail)}
-                placeholder='Email'
-                iconName='user'
-                keyBoardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
+            <KeyboardAvoidingView behavior={'padding'}>
+                <FormInput
+                    labelVal={email}
+                    onChangeText={userEmail => setEmail(userEmail)}
+                    placeholder='Email'
+                    iconName='user'
+                    keyBoardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
 
-            <FormInput 
-                labelVal={pass}
-                onChangeText={userPass => setPass(userPass)}
-                placeholder='Password'
-                iconName='lock'
-                secureTextEntry={true}
-            />
-
+                <FormInput 
+                    labelVal={pass}
+                    onChangeText={userPass => setPass(userPass)}
+                    placeholder='Password'
+                    iconName='lock'
+                    secureTextEntry={true}
+                />
+            </KeyboardAvoidingView>
+            
             <FormButton 
                 buttonTitle="Sign In"
                 onPress={() => login(email, pass)}
@@ -62,7 +64,7 @@ export default function LoginScreen({ navigation }) {
             <TouchableOpacity style={styles.forgotButton} onPress={() => navigation.navigate('Signup')}>
                 <Text style={styles.navButtonText}>Don't have an account? Create One!</Text>
             </TouchableOpacity>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 

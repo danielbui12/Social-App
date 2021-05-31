@@ -3,6 +3,7 @@ import { createBottomTabNavigator }  from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons as Icon } from 'react-native-vector-icons';
 import ChatScreen from '../screen/ChatScreen'
 import SettingScreen from '../screen/SettingScreen';
+import StoryScreen from '../screen/StoryScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -13,14 +14,18 @@ export default function AppStack() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Chat') {
+            if (route.name === 'Story') {
               iconName = focused
-                ? 'home-variant'
-                : 'home-variant-outline';
+                ? 'clock-time-two'
+                : 'clock-time-two-outline';
             } else if (route.name === 'Profile') {
               iconName = focused
                 ? 'account-settings'
                 : 'account-settings-outline';
+            } else if(route.name =="Chat") {
+              iconName = focused
+                ? 'message'
+                : 'message-outline';
             }
 
             // You can return any component that you like here!
@@ -32,6 +37,7 @@ export default function AppStack() {
           inactiveTintColor: 'gray',
         }}
       >
+        <Tab.Screen name="Story" component={StoryScreen} />
         <Tab.Screen name="Chat" component={ChatScreen} />
         <Tab.Screen name="Profile" component={SettingScreen} />
       </Tab.Navigator>

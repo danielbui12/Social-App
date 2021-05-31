@@ -21,7 +21,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <KeyboardAvoidingView behavior={"padding"} style={styles.container}>
+        <View style={styles.container}>
             <Text style={styles.text}>Create an account</Text>
 
             <FormInput
@@ -59,7 +59,7 @@ export default function LoginScreen({ navigation }) {
             <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.navButtonText}>Have an account? Sign In!</Text>
             </TouchableOpacity>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 
