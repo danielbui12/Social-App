@@ -4,7 +4,6 @@ import AuthStack from './AuthStack'
 import AppStack from './AppStack'
 import { AuthContext } from './AuthProvider'
 import { auth } from '../Constant/firebase'
-
 const Routes = () => {
     const {user, setUser} = useContext(AuthContext)
     const [initialize, setInitialize] = useState(true)

@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
         .then(authUser => {
             authUser.user.updateProfile({
                 displayName: name,
-                photoURL: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2Finsider-coub%2Fdefault-avatars-4275c0e41f62&psig=AOvVaw0ZYOy30Kedpb0lAO2LhR2a&ust=1622197977911000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKCwnM7U6fACFQAAAAAdAAAAABAD",
+                photoURL: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg",
             })
         }).catch(err => {
             console.log(err)

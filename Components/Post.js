@@ -17,7 +17,8 @@ import {
 
 const Post = ({ item }) => {
   let liked = item.liked ? "heart" : "heart-outline"
-  let isPostPic, likes
+  let isPostPic
+  var likes = ''
 
   if(item.img == "none") {
     isPostPic = false
@@ -27,8 +28,8 @@ const Post = ({ item }) => {
 
   if(item.likes == 1) {
     likes = "1 Like"
-  } else if(item.like > 1) {
-    likes = `${item.likes} Likes`
+  } else if(item.likes > 1) {
+    likes = item.likes + ' Likes'
   } else {
     likes = "Like"
   }
