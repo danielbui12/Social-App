@@ -106,9 +106,9 @@ export const TextStatus = styled.Text`
     font-weight: bold;
 `
 export const AddImage = styled.Image`
-    width: 100%,
+    flex:1;
     height: 250px;
-    margin=bottom: 16px;
+    margin-vertical: 16px;
 `
 
 export const ButtonWrapper = styled.Text`

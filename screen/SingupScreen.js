@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
         .then(authUser => {
             authUser.user.updateProfile({
                 displayName: name,
-                photoURL: "https://thumbs.dreamstime.com/z/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg",
+                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/193246645_2944957142497931_8291874148986630309_n.png?alt=media&token=a73c6fc5-9c2f-451c-a5c9-61b888e1f820",
             })
         }).catch(err => {
             console.log(err)
