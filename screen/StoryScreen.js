@@ -10,7 +10,7 @@ import {
   TextStatusWrapper, 
   AddImage, 
 } from "./styled/styledComponent";
-import { auth, db } from '../Constant/firebase'
+import { auth, fireStore } from '../Constant/firebase'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
@@ -105,8 +105,22 @@ const PostStatusScreen = () => {
     }
   };
 
-  const postStt = () => {
+  const takePhoto = async () => {
+    
+  }
 
+  const postStt = async () => {
+    const uploadUri = image
+    let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1);
+    const extension = fileName.split(".").pop(); //duoi file
+    const name = fileName.split(".").slice(0,-1).join(".");
+    fileName = name + Date.now() + "." + extension;
+    // console.log(fileName);
+    try {
+      await fireStore.ref(fileName).put(uploadUri)
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -125,6 +139,9 @@ const PostStatusScreen = () => {
         </ActionButton.Item>
         <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>
           <Icon name="md-image" style={styles} />
+        </ActionButton.Item>
+        <ActionButton.Item buttonColor='#3415db' title="Add Image" onPress={takePhoto}>
+          <Icon name="md-camera" style={styles} />
         </ActionButton.Item>
       </ActionButton> 
     </>
