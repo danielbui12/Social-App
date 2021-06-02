@@ -105,11 +105,14 @@ export const TextStatus = styled.Text`
     opacity: 0.3;
     font-weight: bold;
 `
-export const StatusWrapper = styled.View`
-    flex: 1;
-    background-color: #03a9f4;
+export const AddImage = styled.Image`
+    width: 100%,
+    height: 250px;
+    margin=bottom: 16px;
 `
 
-export const buttonWrapper = styled.View`
-    flex-direction: row;
+export const ButtonWrapper = styled.Text`
+    font-size: 18px;
+    margin-right: 15px;
+    opacity: 0.8;
 `
