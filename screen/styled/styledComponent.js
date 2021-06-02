@@ -108,11 +108,17 @@ export const TextStatus = styled.Text`
 export const AddImage = styled.Image`
     flex:1;
     height: 250px;
-    margin-vertical: 16px;
+    margin-bottom: 16px;
+    align-self: center;
 `
 
 export const ButtonWrapper = styled.Text`
     font-size: 18px;
     margin-right: 15px;
     opacity: 0.8;
+`
+
+export const StatusWrapper = styled.View`
+    justify-content: center;
+    align-items: center;
 `
