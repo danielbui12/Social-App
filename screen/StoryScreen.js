@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "../Components/Post";
-import { FlatList, TextInput, Platform, Alert, Text, ActivityIndicator } from "react-native";
+import { FlatList, TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack'
 import { 
   Avartar, 
@@ -77,7 +77,6 @@ const PostStatusScreen = () => {
   const [userStt, setUserStt] = useState("");
   const [image, setImage] = useState(null);
   const [uploading, setUpLoading] = useState(false)
-  const [transferred, setTransferred] = useState(0)
 
   let styles = {
     fontSize: 20,
@@ -101,13 +100,13 @@ const PostStatusScreen = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 1
     });
 
     if (!result.cancelled) {
       setImage(result.uri);
     }
-  };
+  }
 
   const takePhoto = async () => {
     let result = await ImagePicker.launchCameraAsync({
@@ -125,22 +124,14 @@ const PostStatusScreen = () => {
   const postStt = async () => {
     const uploadUri = image
     let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1);
-    const extension = fileName.split(".").pop(); //duoi file
+    const extension = 'png'
     const name = fileName.split(".").slice(0,-1).join(".");
     fileName = name + Date.now() + "." + extension;
     // console.log(fileName);
 
     setUpLoading(true)
-    setTransferred(0)
     
-    const task = fireStore.ref(fileName).put(uploadUri)
-
-    task.on('state_changed', taskSnapshot => {
-      
-      setTransferred(
-        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100
-      )
-    })
+    const task =  fireStore.ref(fileName).put(uploadUri)
 
     try {
       await task
@@ -150,25 +141,28 @@ const PostStatusScreen = () => {
     }
 
     setImage(null)
+    setUserStt(null)
   }
 
   return (
     <>
-      {image && <AddImage source={{ uri: image }}/>}
-      <TextInput 
-        placeholder="What's on your mind ?" 
-        value={userStt} 
-        onChangeText={(text) => setUserStt(text)}
-        autoCorrect={false}
-        style={{fontSize: 20, flex: 1, alignSelf: 'center'}}
-      />
-      {uploading ? (
-        <StatusWrapper>
-          <Text>{transferred} % Completed !</Text>
-          <ActivityIndicator size={"large"} color="#0000ff"/>
-        </StatusWrapper>
-      ): <></>
-      }
+      <KeyboardAvoidingView behavior={"height"} style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        {image != null  && <AddImage source={{ uri: image }}/>}
+        <TextInput 
+          placeholder="What's on your mind ?" 
+          value={userStt} 
+          onChangeText={(text) => setUserStt(text)}
+          autoCorrect={false}
+          style={{fontSize: 20, flex: 1, alignSelf: 'center'}}
+        />
+        {uploading ? (
+          <StatusWrapper>
+            <Text>Uploading ... !</Text>
+            <ActivityIndicator size={"large"} color="#0000ff"/>
+          </StatusWrapper>
+        ): <></>
+        }
+      </KeyboardAvoidingView>
       <ActionButton buttonColor="rgba(231,76,60,1)">
         <ActionButton.Item buttonColor='#9b59b6' title="Post Status" onPress={postStt}>
           <Icon name="md-create" style={styles} />
@@ -176,7 +170,7 @@ const PostStatusScreen = () => {
         <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>
           <Icon name="md-image" style={styles} />
         </ActionButton.Item>
-        <ActionButton.Item buttonColor='#3415db' title="Add Image" onPress={takePhoto}>
+        <ActionButton.Item buttonColor='#3415db' title="Take a photo" onPress={takePhoto}>
           <Icon name="md-camera" style={styles} />
         </ActionButton.Item>
       </ActionButton> 
