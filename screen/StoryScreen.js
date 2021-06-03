@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Post from "../Components/Post";
-import { FlatList, TextInput, Platform, Alert, Text, ActivityIndicator } from "react-native";
+import { FlatList, TextInput, Platform, Alert, Text, ActivityIndicator, Image } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack'
 import { 
   Avartar, 
@@ -77,7 +77,6 @@ const PostStatusScreen = () => {
   const [userStt, setUserStt] = useState("");
   const [image, setImage] = useState(null);
   const [uploading, setUpLoading] = useState(false)
-  const [transferred, setTransferred] = useState(0)
 
   let styles = {
     fontSize: 20,
@@ -104,6 +103,8 @@ const PostStatusScreen = () => {
       quality: 1,
     });
 
+    // console.log(result);
+
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -129,18 +130,13 @@ const PostStatusScreen = () => {
     const name = fileName.split(".").slice(0,-1).join(".");
     fileName = name + Date.now() + "." + extension;
     // console.log(fileName);
-
-    setUpLoading(true)
-    setTransferred(0)
     
-    const task = fireStore.ref(fileName).put(uploadUri)
-
-    task.on('state_changed', taskSnapshot => {
-      
-      setTransferred(
-        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100
-      )
-    })
+    setUpLoading(true)
+    
+    var metadata = {
+      contentType: 'image/png'
+    }
+    const task = fireStore.ref(fileName).put(uploadUri, metadata)
 
     try {
       await task
@@ -150,11 +146,11 @@ const PostStatusScreen = () => {
     }
 
     setImage(null)
+    setUserStt(null)
   }
 
   return (
     <>
-      {image && <AddImage source={{ uri: image }}/>}
       <TextInput 
         placeholder="What's on your mind ?" 
         value={userStt} 
@@ -162,9 +158,10 @@ const PostStatusScreen = () => {
         autoCorrect={false}
         style={{fontSize: 20, flex: 1, alignSelf: 'center'}}
       />
+      {image && <AddImage source={{ uri: image }} />}
       {uploading ? (
         <StatusWrapper>
-          <Text>{transferred} % Completed !</Text>
+          <Text>Uploading .... !</Text>
           <ActivityIndicator size={"large"} color="#0000ff"/>
         </StatusWrapper>
       ): <></>
@@ -176,7 +173,7 @@ const PostStatusScreen = () => {
         <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>
           <Icon name="md-image" style={styles} />
         </ActionButton.Item>
-        <ActionButton.Item buttonColor='#3415db' title="Add Image" onPress={takePhoto}>
+        <ActionButton.Item buttonColor='#3415db' title="Take a photo" onPress={takePhoto}>
           <Icon name="md-camera" style={styles} />
         </ActionButton.Item>
       </ActionButton> 
