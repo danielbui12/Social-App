@@ -13,7 +13,7 @@ import {
   Interaction,
   InteractionText,
   Divided
-} from "../screen/styled/styledComponent";
+} from "../screen/styled/styledHome";
 
 const Post = ({ item }) => {
   let liked = item.liked ? "heart" : "heart-outline"

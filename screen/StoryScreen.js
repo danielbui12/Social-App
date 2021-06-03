@@ -10,7 +10,7 @@ import {
   TextStatusWrapper, 
   AddImage, 
   StatusWrapper
-} from "./styled/styledComponent";
+} from "./styled/styledHome";
 import { auth, fireStore } from '../Constant/firebase'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -103,6 +103,8 @@ const PostStatusScreen = () => {
       quality: 1
     });
 
+    // console.log(result);
+
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -128,11 +130,15 @@ const PostStatusScreen = () => {
     const name = fileName.split(".").slice(0,-1).join(".");
     fileName = name + Date.now() + "." + extension;
     // console.log(fileName);
-
+    
     setUpLoading(true)
     
-    const task =  fireStore.ref(fileName).put(uploadUri)
+    var metadata = {
+      contentType: 'image/png'
+    }
 
+    const task = fireStore.ref(fileName).put(uploadUri, metadata)
+    
     try {
       await task
       setUpLoading(false)

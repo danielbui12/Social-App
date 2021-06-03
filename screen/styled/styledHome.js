@@ -108,6 +108,7 @@ export const TextStatus = styled.Text`
 export const AddImage = styled.Image`
     flex:1;
     height: 250px;
+    width: 100%;
     margin-bottom: 16px;
     align-self: center;
 `

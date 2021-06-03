@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
         .then(authUser => {
             authUser.user.updateProfile({
                 displayName: name,
-                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/193246645_2944957142497931_8291874148986630309_n.png?alt=media&token=a73c6fc5-9c2f-451c-a5c9-61b888e1f820",
+                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/images.png?alt=media&token=eb825db0-ce85-47a8-a6ac-14f3d1af673c",
             })
         }).catch(err => {
             console.log(err)
