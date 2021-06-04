@@ -50,3 +50,30 @@ export const MessageText = styled.Text`
     font-size: 14px;
     opacity: 0.8;
 `
+export const UserImg1 = styled.Image`
+    width: 40px;
+    height: 40px;
+    border-radius: 25;
+`
+
+export const UserStatusWrapper = styled.View`
+    flex-direction: column;
+    margin-left: 16px;
+`
+export const HandlerUserMedia = styled.View`
+    flex-direction: row;
+    justify-content: space-between; 
+    width: 70px;
+    marginRight: 16px;
+`
+export const ChatBar = styled.TextInput`
+    width: 90%;
+    justify-content: flex-start;
+    border-radius: 20px;
+    background-color: #ececec;
+    bottom: 0;
+    color: grey;
+    padding: 10px;
+    height: 40px;
+    margin-right: 8px;
+`

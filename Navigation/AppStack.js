@@ -4,13 +4,22 @@ import { MaterialCommunityIcons as Icon } from 'react-native-vector-icons';
 import ChatScreen from '../screen/ChatScreen'
 import SettingScreen from '../screen/SettingScreen';
 import StoryScreen from '../screen/StoryScreen'
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator()
 
 export default function AppStack() {
+  const getTabBarVisible = (route) => {
+    const routeName = getFocusedRouteNameFromRoute(route)
+    if(routeName == "Chat" || routeName == "Post")
+      return false
+    return true
+  }
+
   return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
+          tabBarVisible: getTabBarVisible(route),
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
@@ -33,7 +42,7 @@ export default function AppStack() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#346eeb',
           inactiveTintColor: 'gray',
         }}
       >

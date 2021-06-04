@@ -191,7 +191,10 @@ const StoryScreen = () => {
       <Stack.Screen name="Home" component={Home}/>
       <Stack.Screen 
         name="Post" 
-        component={PostStatusScreen} 
+        component={PostStatusScreen}
+        options={{
+          headerBackTitleVisible: false
+        }}
         />
     </Stack.Navigator>
   )
