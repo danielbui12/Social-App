@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
-import FormInput from '../Components/FormInput'
-import SocialButton from '../Components/SocialButton'
-import FormButton from '../Components/FormButton'
-import { AuthContext } from '../Navigation/AuthProvider'
+import FormInput from '../../Components/FormInput'
+import SocialButton from '../../Components/SocialButton'
+import FormButton from '../../Components/FormButton'
+import { AuthContext } from '../../Navigation/AuthProvider'
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('')

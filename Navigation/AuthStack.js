@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import LoginScreen from '../screen/LoginScreen';
-import OnBoardScreen from '../screen/OnBoardingScreen'
-import SignupScreen from '../screen/SingupScreen'
+import LoginScreen from '../screen/Login/LoginScreen';
+import OnBoardScreen from '../screen/Login/OnBoardingScreen'
+import SignupScreen from '../screen/Login/SingupScreen'
 
 const Stack = createStackNavigator();
 
@@ -44,11 +43,7 @@ function AuthStack() {
               shadowColor: '#f9fafd',
               elevation: 0
             },
-            headerLeft: () => {
-              return (
-                <View />
-              )
-            }
+            headerBackTitleVisible: false
           }}
         />
       </Stack.Navigator>

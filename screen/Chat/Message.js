@@ -13,8 +13,7 @@ import {
     MessageText
 } from '../styled/styledChat'
 
-
-let uri = require('../images/default-avartar.png')
+let uri = require('../../images/default-avartar.png')
 
 const Message = ({ navigation }) => {
     const Message = [
@@ -82,6 +81,6 @@ const Message = ({ navigation }) => {
             />
         </Container>
     )
-}
+} 
 
 export default Message

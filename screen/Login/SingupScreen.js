@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
-import FormInput from '../Components/FormInput'
-import { auth } from '../Constant/firebase'
+import FormInput from '../../Components/FormInput'
+import { auth } from '../../Constant/firebase'
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
     const [name, setName] = useState('')
 
-    const register = (email, pass) =>{ 
+    const register = () =>{ 
         auth.createUserWithEmailAndPassword(email, pass)
         .then(authUser => {
             authUser.user.updateProfile({
@@ -53,7 +53,7 @@ export default function LoginScreen({ navigation }) {
 
             <FormButton 
                 buttonTitle="Register"
-                onPress={() => register(email, pass)}
+                onPress={register}
             />
 
             <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Login')}>
