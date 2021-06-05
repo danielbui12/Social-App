@@ -1,5 +1,5 @@
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { FlatList } from 'react-native'
 import { 
     Container, 
     Card, 
@@ -11,14 +11,12 @@ import {
     UserName,
     PostTime,
     MessageText
-} from './styled/styledChat'
-import { FlatList } from 'react-native'
+} from '../styled/styledChat'
 
-const Stack = createStackNavigator()
 
 let uri = require('../images/default-avartar.png')
 
-const MessageScreen = ({ navigation }) => {
+const Message = ({ navigation }) => {
     const Message = [
         {
             id: 0,
@@ -84,28 +82,6 @@ const MessageScreen = ({ navigation }) => {
             />
         </Container>
     )
-} 
-
-const UserChat = () => {
-    return (
-        <UserName>Hello</UserName>
-    )
 }
 
-function ChatScreen() {
-    return (
-        <Stack.Navigator>
-            <Stack.Screen name="Messages" component={MessageScreen}/>
-            <Stack.Screen 
-                name="Chat" 
-                component={UserChat}
-                options={({ route }) => ({
-                    title: route.params.userName,
-                    headerBackTitleVisible: false,
-                })}
-            />
-        </Stack.Navigator>
-    )
-}
-
-export default ChatScreen
+export default Message

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Post from "../Components/Post";
+import Post from "../../Components/Post";
 import { FlatList, TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import { createStackNavigator } from '@react-navigation/stack'
 import { 
@@ -10,8 +10,8 @@ import {
   TextStatusWrapper, 
   AddImage, 
   StatusWrapper
-} from "./styled/styledHome";
-import { auth, fireStore } from '../Constant/firebase'
+} from "../styled/styledHome";
+import { auth, fireStore } from '../../Constant/firebase'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';

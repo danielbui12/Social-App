@@ -1,9 +1,9 @@
 import React from 'react'
 import { createBottomTabNavigator }  from '@react-navigation/bottom-tabs' 
 import { MaterialCommunityIcons as Icon } from 'react-native-vector-icons';
-import ChatScreen from '../screen/ChatScreen'
-import SettingScreen from '../screen/SettingScreen';
-import StoryScreen from '../screen/StoryScreen'
+import ChatScreen from '../screen/Chat/ChatScreen'
+import SettingScreen from '../screen/Profile/SettingScreen';
+import StoryScreen from '../screen/Home/StoryScreen'
 
 const Tab = createBottomTabNavigator()
 
