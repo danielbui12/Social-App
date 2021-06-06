@@ -1,7 +1,9 @@
-import React from "react";
+import React from "react"
+import { TouchableOpacity, Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from './Home'
 import PostScreen from './Post'
+
 const Stack = createStackNavigator()
 
 const StoryScreen = () => {
@@ -12,7 +14,12 @@ const StoryScreen = () => {
         name="Post" 
         component={PostScreen}
         options={{
-          headerBackTitleVisible: false
+          headerBackTitleVisible: false,
+          headerRight: () => (
+            <TouchableOpacity style={{width: 80, backgroundColor: "#3086fb", alignItems: 'center'}}>
+              <Text style={{fontSize: 16, fontWeight: "bold", color: "#fff"}}>Post</Text>
+            </TouchableOpacity>
+          )
         }}
         />
     </Stack.Navigator>

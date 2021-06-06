@@ -62,7 +62,7 @@ export default PostScreen = () => {
   
     const postStt = async () => {
         const uploadUri = image
-        setUploading(true)
+        setUpLoading(true)
         let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1);
         const extension = fileName.split(".").pop(); //duoi file
         const name = fileName.split(".").slice(0,-1).join(".");
@@ -79,7 +79,7 @@ export default PostScreen = () => {
 
             newImageUri = await ref.snapshot.ref.getDownloadURL()
 
-            setUploading(false)
+            setUpLoading(false)
         } 
         catch (error) {
             console.log(error)

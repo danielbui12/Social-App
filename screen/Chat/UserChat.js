@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     UserImg1,
     UserStatusWrapper,
@@ -21,7 +21,9 @@ import { auth, db } from '../../Constant/firebase'
 let uri = require('../../images/default-avartar.png')
 
 const UserChat = ({ navigation, route }) => {
-    const [input, setInput] = useState(null);
+    const [input, setInput] = useState(null)
+    const [messages, setMessages] = useState()
+
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Chat",
@@ -62,9 +64,35 @@ const UserChat = ({ navigation, route }) => {
         setInput('')
     }
 
+    useLayoutEffect(() => {
+        const unsubcribe = db
+            .collection('chats')
+            .doc(route.params.id)
+            .collection('messages')
+            .orderBy('timestamp', 'desc')
+            .onSnapshot(snapshot => {
+                setMessages(
+                    snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        data: doc.data()
+                    }))
+                )
+            })
+        
+        return unsubcribe
+    }, [route])
+
     return (
         <KeyboardAvoidingView behavior={'height'} keyboardVerticalOffset={90} style={{flex: 1}}>
-            <ScrollView>{/* chat here */}</ScrollView>
+            <ScrollView>
+                {messages.map(({ id, data }) => (
+                    data.email == auth.currentUser.email ? (
+                        <></>
+                    ) : (
+                        <></>
+                    )
+                ))}
+            </ScrollView>
             <View style={{flexDirection: "row", alignItems: 'center', padding: 16}}>
                 <ChatBar 
                     value={input}
