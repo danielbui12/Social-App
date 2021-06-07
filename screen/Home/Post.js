@@ -44,22 +44,7 @@ export default PostScreen = ({ navigation }) => {
         }
       })();
     }, []);
-  
-    const pickImage = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1
-      });
-  
-      // console.log(result);
-  
-      if (!result.cancelled) {
-        setImage(result.uri);
-      }
-    }
-  
+    
     const takePhoto = async () => {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -72,34 +57,46 @@ export default PostScreen = ({ navigation }) => {
         setImage(result.uri)
       }
     }
+
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      })
+  
+  
+      if (!result.cancelled) {
+        setImage(result.uri);
+      }
+  
+      // console.log(result)
+    }
   
     const postStt = async () => {
       if(!image && userStt.trim() == null)  return
     
-      setUpLoading(true)
-      let fileName = image.substring(image.lastIndexOf("/") + 1);
-      const extension = fileName.split(".").pop(); //duoi file
-      const name = fileName.split(".").slice(0,-1).join(".");
-      fileName = name + Date.now() + "." + extension;
+      const uploadUri = image
+      let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1)
+      const extension = fileName.split(".").pop() //duoi file
+      const name = fileName.split(".").slice(0,-1).join(".")
+      fileName = name + Date.now() + "." + extension
 
       let newImageUri
 
       try {
-          const response = await fetch(image)
-          const blob = await response.blob()
-
-          await firebase.storage().ref().child(fileName).put(blob)
-          var ref = firebase.storage().ref().child(fileName).put(blob)
-
-          newImageUri = await ref.snapshot.ref.getDownloadURL()
-
-          setUpLoading(false)
-          setImage(null)
-          setUserStt(null)
-      } 
-      catch (error) {
-          console.log(error)
-          
+        const response = await fetch(image)
+        const blob = await response.blob()
+      
+        await firebase.default.storage().ref().child(fileName).put(blob)
+        var ref = firebase.default.storage().ref().child(fileName).put(blob)
+      
+        newImageUri = await ref.snapshot.ref.getDownloadURL()
+        setUploading(false)
+        setImage(null)
+      } catch (error) {
+        console.log(error)    
       }
     }
   
