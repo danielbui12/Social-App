@@ -55,11 +55,11 @@ const UserChat = ({ navigation, route }) => {
         })
     }, [navigation] )
 
-    const sendMessage = () => {
+    const sendMessage = (mess) => {
         Keyboard.dismiss()
         db.collection('chats').doc(route.params.id).collection('messages').add({
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            message: input,
+            message: mess,
             displayName: auth.currentUser.displayName,
             email: auth.currentUser.email,
             photoUrl: auth.currentUser.photoURL,
@@ -93,10 +93,12 @@ const UserChat = ({ navigation, route }) => {
                     data.email == auth.currentUser.email ? (
                         <UserChatWrapper key={id}>
                             <UserChatText>{data.message}</UserChatText>
+                            <Text>{data.timestamp}</Text>
                         </UserChatWrapper>
                     ) : (
                         <User2ChatWrapper>
                             <User2ChatText>{data.message}</User2ChatText>
+                            <Text>{data.timestamp}</Text>
                         </User2ChatWrapper>
                     )
                 ))}
@@ -107,7 +109,7 @@ const UserChat = ({ navigation, route }) => {
                     onChangeText={(text) => setInput(text)}
                     placeholder="Type ..."
                 />
-                <TouchableOpacity activeOpacity={0.7} onPress={sendMessage}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => sendMessage(input)}>
                     <Ionicons name="send" size={24} color="#346eeb"/>
                 </TouchableOpacity>
             </View>
