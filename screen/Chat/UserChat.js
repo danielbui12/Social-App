@@ -4,7 +4,11 @@ import {
     UserStatusWrapper,
     HandlerUserMedia,
     ChatBar,
-    UserName
+    UserName,
+    UserChatWrapper,
+    UserChatText,
+    User2ChatWrapper,
+    User2ChatText
 } from './styled/styledChat'
 import { 
     Text, 
@@ -87,9 +91,13 @@ const UserChat = ({ navigation, route }) => {
             <ScrollView>
                 {messages.map(({ id, data }) => (
                     data.email == auth.currentUser.email ? (
-                        <></>
+                        <UserChatWrapper>
+                            <UserChatText></UserChatText>
+                        </UserChatWrapper>
                     ) : (
-                        <></>
+                        <User2ChatWrapper>
+                            <User2ChatText></User2ChatText>
+                        </User2ChatWrapper>
                     )
                 ))}
             </ScrollView>

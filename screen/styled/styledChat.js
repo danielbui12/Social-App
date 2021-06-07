@@ -77,3 +77,24 @@ export const ChatBar = styled.TextInput`
     height: 40px;
     margin-right: 8px;
 `
+
+export const UserChatWrapper = styled.View`
+    border-radius: 20px;
+    background-color: "#3086fb";
+    margin-left: 10px;
+`
+
+export const UserChatText = styled.View`
+    font-size:16px;
+    font-weight: 800;
+    color: #fff;
+    padding: 8px;
+`
+
+export const User2ChatWrapper = styled.View`
+
+`
+
+export const User2ChatText = styled.View`
+
+`

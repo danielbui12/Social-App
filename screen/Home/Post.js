@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
   AddImage, 
-  StatusWrapper
+  StatusWrapper,
+  PostButton,
+  PostText
 } from "../styled/styledHome"
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,7 +12,7 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 
-export default PostScreen = () => {
+export default PostScreen = ({ navigation }) => {
     const [userStt, setUserStt] = useState("");
     const [image, setImage] = useState(null);
     const [uploading, setUpLoading] = useState(false)
@@ -20,7 +22,18 @@ export default PostScreen = () => {
       height: 22,
       color: 'white',
     }
-  
+    
+    useLayoutEffect(() => {
+      navigation.setOptions({
+        headerBackTitleVisible: false,
+        headerRight: () => (
+          <PostButton image={image} userStt={userStt} onPress={postStt}>
+            <PostText image={image} userStt={userStt} >Post</PostText>
+          </PostButton>
+        )
+      })
+    }, [navigation])
+
     useEffect(() => {
       (async () => {
         if (Platform.OS !== 'web') {
@@ -111,9 +124,6 @@ export default PostScreen = () => {
           }
         </KeyboardAvoidingView>
         <ActionButton buttonColor="rgba(231,76,60,1)">
-          <ActionButton.Item buttonColor='#9b59b6' title="Post Status" onPress={postStt}>
-            <Icon name="md-create" style={styles} />
-          </ActionButton.Item>
           <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>
             <Icon name="md-image" style={styles} />
           </ActionButton.Item>
