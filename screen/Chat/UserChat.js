@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import {
     UserImg1,
     UserStatusWrapper,
@@ -9,7 +9,7 @@ import {
     UserChatText,
     User2ChatWrapper,
     User2ChatText
-} from './styled/styledChat'
+} from '../styled/styledChat'
 import { 
     Text, 
     TouchableOpacity, 
@@ -20,13 +20,13 @@ import {
 } from 'react-native'
 import { Ionicons, FontAwesome } from 'react-native-vector-icons'
 import { auth, db } from '../../Constant/firebase'
-
+import * as firebase from 'firebase'
 
 let uri = require('../../images/default-avartar.png')
 
 const UserChat = ({ navigation, route }) => {
     const [input, setInput] = useState(null)
-    const [messages, setMessages] = useState()
+    const [messages, setMessages] = useState([])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -91,12 +91,12 @@ const UserChat = ({ navigation, route }) => {
             <ScrollView>
                 {messages.map(({ id, data }) => (
                     data.email == auth.currentUser.email ? (
-                        <UserChatWrapper>
-                            <UserChatText></UserChatText>
+                        <UserChatWrapper key={id}>
+                            <UserChatText>{data.message}</UserChatText>
                         </UserChatWrapper>
                     ) : (
                         <User2ChatWrapper>
-                            <User2ChatText></User2ChatText>
+                            <User2ChatText>{data.message}</User2ChatText>
                         </User2ChatWrapper>
                     )
                 ))}

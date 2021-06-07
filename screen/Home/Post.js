@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState, useEffect } from 'react'
 import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
   AddImage, 
@@ -9,7 +9,7 @@ import {
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
-
+import * as firebase from 'firebase'
 
 
 export default PostScreen = ({ navigation }) => {
@@ -27,8 +27,8 @@ export default PostScreen = ({ navigation }) => {
       navigation.setOptions({
         headerBackTitleVisible: false,
         headerRight: () => (
-          <PostButton image={image} userStt={userStt} onPress={postStt}>
-            <PostText image={image} userStt={userStt} >Post</PostText>
+          <PostButton onPress={postStt}>
+            <PostText>Post</PostText>
           </PostButton>
         )
       })
@@ -74,34 +74,33 @@ export default PostScreen = ({ navigation }) => {
     }
   
     const postStt = async () => {
-        const uploadUri = image
-        setUpLoading(true)
-        let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1);
-        const extension = fileName.split(".").pop(); //duoi file
-        const name = fileName.split(".").slice(0,-1).join(".");
-        fileName = name + Date.now() + "." + extension;
+      if(!image && userStt.trim() == null)  return
+    
+      setUpLoading(true)
+      let fileName = image.substring(image.lastIndexOf("/") + 1);
+      const extension = fileName.split(".").pop(); //duoi file
+      const name = fileName.split(".").slice(0,-1).join(".");
+      fileName = name + Date.now() + "." + extension;
 
-        let newImageUri
+      let newImageUri
 
-        try {
-            const response = await fetch(image)
-            const blob = await response.blob()
+      try {
+          const response = await fetch(image)
+          const blob = await response.blob()
 
-            await firebase.storage().ref().child(fileName).put(blob)
-            var ref = firebase.storage().ref().child(fileName).put(blob)
+          await firebase.storage().ref().child(fileName).put(blob)
+          var ref = firebase.storage().ref().child(fileName).put(blob)
 
-            newImageUri = await ref.snapshot.ref.getDownloadURL()
+          newImageUri = await ref.snapshot.ref.getDownloadURL()
 
-            setUpLoading(false)
-        } 
-        catch (error) {
-            console.log(error)
-            
-        }
-
-
-      setImage(null)
-      setUserStt(null)
+          setUpLoading(false)
+          setImage(null)
+          setUserStt(null)
+      } 
+      catch (error) {
+          console.log(error)
+          
+      }
     }
   
     return (

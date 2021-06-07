@@ -81,7 +81,10 @@ export const ChatBar = styled.TextInput`
 export const UserChatWrapper = styled.View`
     border-radius: 20px;
     background-color: "#3086fb";
-    margin-left: 10px;
+    margin-right: 10px;
+    align-self: flex-end;
+    margin-bottom: 20px;
+    max-width: 80%
 `
 
 export const UserChatText = styled.View`
@@ -92,7 +95,12 @@ export const UserChatText = styled.View`
 `
 
 export const User2ChatWrapper = styled.View`
-
+    border-radius: 20px;
+    background-color: "#aaaaae";
+    margin-right: 10px;
+    align-self: flex-end;
+    margin-bottom: 20px;
+    max-width: 80%
 `
 
 export const User2ChatText = styled.View`

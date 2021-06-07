@@ -122,16 +122,19 @@ export const ButtonWrapper = styled.Text`
 export const StatusWrapper = styled.View`
     justify-content: center;
     align-items: center;
+    margin-bottom: 8px;
 `
 
 export const PostButton = styled.TouchableOpacity`
     width: 80px;
     align-items: center;
-    border-radius: 20px;
-    background-color: (props.image || props.userStt) ? "#3086fb" : "#c6c6ca";
+    border-radius: 10px;
+    margin-right: 8px;
+    background-color: #3086fb;
 `
 export const PostText = styled.Text`
     font-size: 16px; 
     font-weight: bold; 
-    color: (props.image || props.userStt) ? "#fff" : "#aaaaae"; 
+    padding: 8px;
+    color: #fff; 
 `

@@ -8,6 +8,7 @@ import {
  } from '../styled/styledHome'
 import { FlatList } from 'react-native'
 import Post from "../../Components/Post"
+import { auth } from '../../Constant/firebase'
 
 export default HomeScreen = ({ navigation }) => {
     const User = [
@@ -26,7 +27,7 @@ export default HomeScreen = ({ navigation }) => {
         name: "Martin John",
         active: "1 hours ago",
         caption: "Hi friends!",
-        img: require("../images/1.jpg"),
+        img: require("../../images/1.jpg"),
         liked: false,
         likes: "2",
         comment: "0"
@@ -46,7 +47,7 @@ export default HomeScreen = ({ navigation }) => {
     return (
       <Container>
         <UserStatus>
-          <Avartar source={{uri: auth?.currentUser?.photoURL}} />
+          <Avartar source={{uri: auth.currentUser.photoURL}} />
           <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
             <TextStatus>What's on your mind ... ?</TextStatus>
           </TextStatusWrapper>
