@@ -75,8 +75,8 @@ export default PostScreen = ({ navigation }) => {
     }
   
     const postStt = async () => {
-      if(!image && userStt.trim() == null)  return
-    
+      if(!image && !userStt.trim().length)  return
+
       const uploadUri = image
       let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1)
       const extension = fileName.split(".").pop() //duoi file
@@ -85,19 +85,17 @@ export default PostScreen = ({ navigation }) => {
 
       let newImageUri
 
-      try {
+      if(image) {
         const response = await fetch(image)
         const blob = await response.blob()
-      
+        
         await firebase.default.storage().ref().child(fileName).put(blob)
         var ref = firebase.default.storage().ref().child(fileName).put(blob)
-      
+        
         newImageUri = await ref.snapshot.ref.getDownloadURL()
-        setUploading(false)
-        setImage(null)
-      } catch (error) {
-        console.log(error)    
       }
+    
+      // navigation.goBack()
     }
   
     return (
@@ -111,13 +109,7 @@ export default PostScreen = ({ navigation }) => {
             autoCorrect={false}
             style={{fontSize: 20, flex: 1, alignSelf: 'center'}}
           />
-          {uploading ? (
-            <StatusWrapper>
-              <Text>Uploading ... !</Text>
-              <ActivityIndicator size={"large"} color="#0000ff"/>
-            </StatusWrapper>
-          ): <></>
-          }
+
         </KeyboardAvoidingView>
         <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>

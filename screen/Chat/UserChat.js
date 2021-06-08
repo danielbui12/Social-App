@@ -56,6 +56,7 @@ const UserChat = ({ navigation, route }) => {
     }, [navigation] )
 
     const sendMessage = (mess) => {
+        if(mess.trim().length == 0) return
         Keyboard.dismiss()
         db.collection('chats').doc(route.params.id).collection('messages').add({
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -75,11 +76,12 @@ const UserChat = ({ navigation, route }) => {
             .collection('messages')
             .orderBy('timestamp', 'desc')
             .onSnapshot(snapshot => {
-                setMessages(
+                setMessages(prev => prev.concat(
                     snapshot.docs.map(doc => ({
                         id: doc.id,
                         data: doc.data()
                     }))
+                )
                 )
             })
         
@@ -91,7 +93,7 @@ const UserChat = ({ navigation, route }) => {
             <ScrollView>
                 {messages.map(({ id, data }) => (
                     data.email == auth.currentUser.email ? (
-                        <UserChatWrapper key={id}>
+                        <UserChatWrapper key={id} style={{width: 100}}>
                             <UserChatText>{data.message}</UserChatText>
                             <Text>{data.timestamp}</Text>
                         </UserChatWrapper>
