@@ -47,7 +47,7 @@ export default HomeScreen = ({ navigation }) => {
     return (
       <Container>
         <UserStatus>
-          <Avartar source={{uri: auth.currentUser.photoURL}} />
+          <Avartar source={{uri: auth.currentUser.photoURL.toString() }} />
           <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
             <TextStatus>What's on your mind ... ?</TextStatus>
           </TextStatusWrapper>

@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useEffect } from 'react'
 import {
     UserImg1,
     UserStatusWrapper,
@@ -69,7 +69,7 @@ const UserChat = ({ navigation, route }) => {
         setInput('')
     }
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const unsubcribe = db
             .collection('chats')
             .doc(route.params.id)

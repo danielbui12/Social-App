@@ -63,7 +63,7 @@ export default PostScreen = ({ navigation }) => {
     }
 
     const upload = async () => {
-  
+      setUpLoading(true)
       let fileName = image.substring(image.lastIndexOf("/") + 1);
       const extension = fileName.split(".").pop(); //duoi file
       const name = fileName.split(".").slice(0,-1).join(".");
@@ -72,17 +72,17 @@ export default PostScreen = ({ navigation }) => {
       // console.log(name)
       let newImageUri
   
-      try {
+      if(image) {
         const response = await fetch(image)
         const blob = await response.blob()
         await storage.ref().child(fileName).put(blob)
         var ref = storage.ref().child(fileName).put(blob)
       
         newImageUri = await ref.snapshot.ref.getDownloadURL()
-      } catch (error) {
-        console.log(error)    
       }
-        setImage(null)
+
+      setUpLoading(false)
+      setImage(null)
     }
   
     return (
@@ -106,7 +106,7 @@ export default PostScreen = ({ navigation }) => {
             <Icon name="md-camera" style={styles} />
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#3415db' title="Upload" onPress={upload}>
-            <Icon name="md-task" style={styles} />
+            <Icon name="md-create" style={styles} />
           </ActionButton.Item>
         </ActionButton> 
       </>
