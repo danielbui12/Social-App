@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import FormInput from '../../Components/FormInput'
 import { auth } from '../../Constant/firebase'
 
@@ -21,9 +21,9 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior={"height"} style={styles.container}>
             <Text style={styles.text}>Create an account</Text>
-
+               
             <FormInput
                 labelVal={name}
                 onChangeText={name => setName(name)}
@@ -59,7 +59,7 @@ export default function LoginScreen({ navigation }) {
             <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.navButtonText}>Have an account? Sign In!</Text>
             </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 

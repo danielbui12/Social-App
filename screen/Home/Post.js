@@ -27,7 +27,7 @@ export default PostScreen = ({ navigation }) => {
       navigation.setOptions({
         headerBackTitleVisible: false,
         headerRight: () => (
-          <PostButton onPress={postStt}>
+          <PostButton onPress={upload}>
             <PostText>Post</PostText>
           </PostButton>
         )
@@ -74,28 +74,31 @@ export default PostScreen = ({ navigation }) => {
       // console.log(result)
     }
   
-    const postStt = async () => {
-      if(!image && !userStt.trim().length)  return
+    const upload = async () => {
 
+      setUploading(true)
+  
       const uploadUri = image
-      let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1)
-      const extension = fileName.split(".").pop() //duoi file
-      const name = fileName.split(".").slice(0,-1).join(".")
-      fileName = name + Date.now() + "." + extension
-
+      let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1);
+      const extension = fileName.split(".").pop(); //duoi file
+      const name = fileName.split(".").slice(0,-1).join(".");
+      fileName = name + Date.now() + "." + extension;
+  
+      // console.log(name)
       let newImageUri
-
-      if(image) {
+  
+      try {
         const response = await fetch(image)
         const blob = await response.blob()
-        
         await firebase.default.storage().ref().child(fileName).put(blob)
         var ref = firebase.default.storage().ref().child(fileName).put(blob)
-        
+      
         newImageUri = await ref.snapshot.ref.getDownloadURL()
+        setUploading(false)
+        setImage(null)
+      } catch (error) {
+        console.log(error)    
       }
-    
-      // navigation.goBack()
     }
   
     return (
@@ -108,9 +111,9 @@ export default PostScreen = ({ navigation }) => {
             onChangeText={(text) => setUserStt(text)}
             autoCorrect={false}
             style={{fontSize: 20, flex: 1, alignSelf: 'center'}}
-          />
-
+            />
         </KeyboardAvoidingView>
+        {uploading && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
         <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>
             <Icon name="md-image" style={styles} />
