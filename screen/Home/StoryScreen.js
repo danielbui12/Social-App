@@ -9,7 +9,7 @@ const StoryScreen = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen}/>
-      <Stack.Screen name="Post" component={PostScreen}/>
+      <Stack.Screen name="Post" component={PostScreen} options={{headerBackTitleVisible: false}}/>
     </Stack.Navigator>
   )
 }

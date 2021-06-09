@@ -1,15 +1,14 @@
-import React, { useLayoutEffect, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
-  AddImage, 
-  StatusWrapper,
+  AddImage,
   PostButton,
   PostText
 } from "../styled/styledHome"
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
-import * as firebase from 'firebase'
+import { storage } from '../../Constant/firebase'
 
 
 export default PostScreen = ({ navigation }) => {
@@ -22,17 +21,6 @@ export default PostScreen = ({ navigation }) => {
       height: 22,
       color: 'white',
     }
-    
-    useLayoutEffect(() => {
-      navigation.setOptions({
-        headerBackTitleVisible: false,
-        headerRight: () => (
-          <PostButton onPress={upload}>
-            <PostText>Post</PostText>
-          </PostButton>
-        )
-      })
-    }, [navigation])
 
     useEffect(() => {
       (async () => {
@@ -73,13 +61,10 @@ export default PostScreen = ({ navigation }) => {
   
       // console.log(result)
     }
-  
-    const upload = async () => {
 
-      setUploading(true)
+    const upload = async () => {
   
-      const uploadUri = image
-      let fileName = uploadUri.substring(uploadUri.lastIndexOf("/") + 1);
+      let fileName = image.substring(image.lastIndexOf("/") + 1);
       const extension = fileName.split(".").pop(); //duoi file
       const name = fileName.split(".").slice(0,-1).join(".");
       fileName = name + Date.now() + "." + extension;
@@ -90,15 +75,14 @@ export default PostScreen = ({ navigation }) => {
       try {
         const response = await fetch(image)
         const blob = await response.blob()
-        await firebase.default.storage().ref().child(fileName).put(blob)
-        var ref = firebase.default.storage().ref().child(fileName).put(blob)
+        await storage.ref().child(fileName).put(blob)
+        var ref = storage.ref().child(fileName).put(blob)
       
         newImageUri = await ref.snapshot.ref.getDownloadURL()
-        setUploading(false)
-        setImage(null)
       } catch (error) {
         console.log(error)    
       }
+        setImage(null)
     }
   
     return (
@@ -120,6 +104,9 @@ export default PostScreen = ({ navigation }) => {
           </ActionButton.Item>
           <ActionButton.Item buttonColor='#3415db' title="Take a photo" onPress={takePhoto}>
             <Icon name="md-camera" style={styles} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3415db' title="Upload" onPress={upload}>
+            <Icon name="md-task" style={styles} />
           </ActionButton.Item>
         </ActionButton> 
       </>
