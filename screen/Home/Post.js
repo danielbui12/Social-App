@@ -83,6 +83,7 @@ export default PostScreen = ({ navigation }) => {
 
       setUpLoading(false)
       setImage(null)
+      setUserStt('')
     }
   
     return (
@@ -94,7 +95,8 @@ export default PostScreen = ({ navigation }) => {
             value={userStt} 
             onChangeText={(text) => setUserStt(text)}
             autoCorrect={false}
-            style={{fontSize: 20, flex: 1, alignSelf: 'center'}}
+            numberOfLines={3}
+            style={{fontSize: 20, flex: 1, alignSelf: 'center', width: '80%'}}
             />
         </KeyboardAvoidingView>
         {uploading && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
@@ -105,7 +107,7 @@ export default PostScreen = ({ navigation }) => {
           <ActionButton.Item buttonColor='#3415db' title="Take a photo" onPress={takePhoto}>
             <Icon name="md-camera" style={styles} />
           </ActionButton.Item>
-          <ActionButton.Item buttonColor='#3415db' title="Upload" onPress={upload}>
+          <ActionButton.Item buttonColor='#9b59b6' title="Upload" onPress={upload}>
             <Icon name="md-create" style={styles} />
           </ActionButton.Item>
         </ActionButton> 

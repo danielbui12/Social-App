@@ -56,8 +56,8 @@ const UserChat = ({ navigation, route }) => {
     }, [navigation] )
 
     const sendMessage = (mess) => {
-        if(mess.trim().length == 0) return
         Keyboard.dismiss()
+        if(mess.trim().length == 0) return
         db.collection('chats').doc(route.params.id).collection('messages').add({
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             message: mess,
@@ -75,17 +75,19 @@ const UserChat = ({ navigation, route }) => {
             .doc(route.params.id)
             .collection('messages')
             .orderBy('timestamp', 'desc')
-            .onSnapshot(snapshot => {
-                setMessages(prev => prev.concat(
-                    snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        data: doc.data()
-                    }))
-                )
-                )
-            })
+            
+        const messageRef = unsubcribe.onSnapshot(snapshot => {
+            const messageFireStore = snapshot.docChanges().filter(({ type }) => {
+                type == 'added'
+            }).map(({ doc }) => {
+                const message = doc.data()
+                return message
+            }).sort((mess1, mess2) => mess1.timestamp - mess2.timestamp)
+            setMessages(prev => prev.concat(messageFireStore))
+        })
         
-        return unsubcribe
+        
+        return messageRef
     }, [route])
 
     return (
@@ -111,7 +113,7 @@ const UserChat = ({ navigation, route }) => {
                     onChangeText={(text) => setInput(text)}
                     placeholder="Type ..."
                 />
-                <TouchableOpacity activeOpacity={0.7} onPress={() => sendMessage(input)}>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => sendMessage(input)} style={{padding: 16}}>
                     <Ionicons name="send" size={24} color="#346eeb"/>
                 </TouchableOpacity>
             </View>
