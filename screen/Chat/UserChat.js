@@ -22,22 +22,12 @@ import {
 } from 'react-native'
 import { Ionicons, FontAwesome } from 'react-native-vector-icons'
 import { auth, db } from '../../Constant/firebase'
-import * as firebase from 'firebase'
 
 let uri = require('../../images/default-avartar.png')
 
 const UserChat = ({ navigation, route }) => {
     const [input, setInput] = useState('')
-    const [messages, setMessages] = useState([
-        {id: 1, message: "asdasd"}, 
-        {id: 2, message: "bbasdasd"},
-
-        {id: 5, message: "bbasssdasd"},
-
-        {id: 6, message: "bbasdsssasd"},
-
-        {id: 8, message: "bbasdfsdghbusdfghusdihguisdhguidsfhguidfhguidfhgufdhguiasd"},
-    ])
+    const [messages, setMessages] = useState([])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -71,63 +61,47 @@ const UserChat = ({ navigation, route }) => {
 
         Keyboard.dismiss()
         
-        
-        // db.collection('chats').doc(route.params.id).collection('messages').add({
-        //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        //     message: mess,
-        //     displayName: auth.currentUser.displayName,
-        //     email: auth.currentUser.email,
-        //     photoUrl: auth.currentUser.photoURL,
-        // })
+        db.collection('chats').add({
+            timestamp: Date.now(),
+            message: input,
+            displayName: auth.currentUser.displayName,
+            email: auth.currentUser.email,
+            photoUrl: auth.currentUser.photoURL,
+        })
 
-        // setInput('')
+        setInput('')
     }
 
-    // useEffect(() => {
-    //     const unsubcribe = db
-    //         .collection('chats')
-    //         .orderBy('timestamp')
-    //         .onSnapshot(snapshot => {
-    //             const messageFireStore = snapshot.docs.map(doc => ({
-    //                 ...doc.data(),
-    //                 id: doc.id
-    //             })
-                
-    //             )
-    //             setMessages(messageFireStore)
-    //         })
-            
-    //         // .docChanges().filter(({ type }) => {
-    //             //     type == 'added'
-    //             // }).map(({ doc }) => {
-    //                 //     const message = doc.data()
-    //                 //     return message
-    //                 // }).sort((mess1, mess2) => mess1.timestamp - mess2.timestamp)
-    //                 // setMessages(prev => prev.concat(messageFireStore))
-    //                 // })
-                    
-    //     return unsubcribe
-    // }, [route])
+    useEffect(() => {            
+        const unsubcriber = db
+          .collection('chats')
+          .orderBy('timestamp')
+          .onSnapshot(snapshot => {
+            const data = snapshot.docs.map(doc => ({
+              ...doc.data(),
+              id: doc.id
+            }))
+          setMessages(data)
+        })
+        
+        return unsubcriber
+      }, [])
 
     return (
         <KeyboardAvoidingView behavior={'height'} keyboardVerticalOffset={90} style={{flex: 1}}>
-            <ScrollView style={{zIndex: 3}}>
+            <ScrollView>
                 {
                     messages.map((message, i) => (
-                        <User2ChatWrapper key={i}>
-                             <UserChatText>{message.message}</UserChatText>
-                        </User2ChatWrapper>
-                    )
-                    )
-                        // m.email == auth.currentUser.email ? (
-                           
-                        //      <Text>{data.timestamp}</Text> 
-                        // ) : (
-                        //     <User2ChatWrapper>
-                        //         <User2ChatText>{data.message}</User2ChatText>
-                        //         <Text>{data.timestamp}</Text>
-                        //     </User2ChatWrapper>
-                        // )
+                        message.email == auth.currentUser.email ? (
+                            <UserChatWrapper key={i}>
+                                 <UserChatText>{message.message}</UserChatText>
+                            </UserChatWrapper>
+                       ) : (
+                           <User2ChatWrapper key={i}>
+                               <User2ChatText>{message.message}</User2ChatText>
+                           </User2ChatWrapper>
+                       )
+                    ))
                 }
             </ScrollView>
 
