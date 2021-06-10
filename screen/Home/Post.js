@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
-  AddImage
+  AddImage,
+  CustomInput
 } from "../styled/styledHome"
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -61,6 +62,7 @@ export default PostScreen = ({ navigation }) => {
     }
 
     const upload = async () => {
+      if(!image && userStt.trim().length == 0)  return
       setUpLoading(true)
       let fileName = image.substring(image.lastIndexOf("/") + 1);
       const extension = fileName.split(".").pop(); //duoi file
@@ -88,14 +90,13 @@ export default PostScreen = ({ navigation }) => {
       <>
         <KeyboardAvoidingView behavior={"height"} style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           {image != null  && <AddImage source={{ uri: image }}/>}
-          <TextInput 
-            placeholder="What's on your mind ?" 
+          <CustomInput 
+            placeholder= "What's on your mind ?"
             value={userStt} 
             onChangeText={(text) => setUserStt(text)}
             autoCorrect={false}
             numberOfLines={3}
-            style={{fontSize: 20, flex: 1, alignSelf: 'center', width: '80%'}}
-            />
+          />
         </KeyboardAvoidingView>
         {uploading && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
         <ActionButton buttonColor="rgba(231,76,60,1)">

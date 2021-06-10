@@ -124,3 +124,11 @@ export const StatusWrapper = styled.View`
     align-items: center;
     margin-bottom: 8px;
 `
+export const CustomInput = styled.TextInput`
+    font-size: 20px;
+    flex: 1; 
+    align-self: center; 
+    width: 80%;
+    padding-bottom: 40px;
+    text-align: center;
+`

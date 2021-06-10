@@ -16,7 +16,9 @@ import {
     KeyboardAvoidingView, 
     ScrollView,
     View,
-    Keyboard
+    Keyboard,
+    Alert,
+    FlatList
 } from 'react-native'
 import { Ionicons, FontAwesome } from 'react-native-vector-icons'
 import { auth, db } from '../../Constant/firebase'
@@ -25,8 +27,17 @@ import * as firebase from 'firebase'
 let uri = require('../../images/default-avartar.png')
 
 const UserChat = ({ navigation, route }) => {
-    const [input, setInput] = useState(null)
-    const [messages, setMessages] = useState([])
+    const [input, setInput] = useState('')
+    const [messages, setMessages] = useState([
+        {id: 1, message: "asdasd"}, 
+        {id: 2, message: "bbasdasd"},
+
+        {id: 5, message: "bbasssdasd"},
+
+        {id: 6, message: "bbasdsssasd"},
+
+        {id: 8, message: "bbasdfsdghbusdfghusdihguisdhguidsfhguidfhguidfhgufdhguiasd"},
+    ])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -55,65 +66,78 @@ const UserChat = ({ navigation, route }) => {
         })
     }, [navigation] )
 
-    const sendMessage = (mess) => {
-        Keyboard.dismiss()
-        if(mess.trim().length == 0) return
-        db.collection('chats').doc(route.params.id).collection('messages').add({
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            message: mess,
-            displayName: auth.currentUser.displayName,
-            email: auth.currentUser.email,
-            photoUrl: auth.currentUser.photoURL,
-        })
+    const sendMessage = () => {
+        if(input.trim().length == 0) return
 
-        setInput('')
+        Keyboard.dismiss()
+        
+        
+        // db.collection('chats').doc(route.params.id).collection('messages').add({
+        //     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        //     message: mess,
+        //     displayName: auth.currentUser.displayName,
+        //     email: auth.currentUser.email,
+        //     photoUrl: auth.currentUser.photoURL,
+        // })
+
+        // setInput('')
     }
 
-    useEffect(() => {
-        const unsubcribe = db
-            .collection('chats')
-            .doc(route.params.id)
-            .collection('messages')
-            .orderBy('timestamp', 'desc')
+    // useEffect(() => {
+    //     const unsubcribe = db
+    //         .collection('chats')
+    //         .orderBy('timestamp')
+    //         .onSnapshot(snapshot => {
+    //             const messageFireStore = snapshot.docs.map(doc => ({
+    //                 ...doc.data(),
+    //                 id: doc.id
+    //             })
+                
+    //             )
+    //             setMessages(messageFireStore)
+    //         })
             
-        const messageRef = unsubcribe.onSnapshot(snapshot => {
-            const messageFireStore = snapshot.docChanges().filter(({ type }) => {
-                type == 'added'
-            }).map(({ doc }) => {
-                const message = doc.data()
-                return message
-            }).sort((mess1, mess2) => mess1.timestamp - mess2.timestamp)
-            setMessages(prev => prev.concat(messageFireStore))
-        })
-        
-        
-        return messageRef
-    }, [route])
+    //         // .docChanges().filter(({ type }) => {
+    //             //     type == 'added'
+    //             // }).map(({ doc }) => {
+    //                 //     const message = doc.data()
+    //                 //     return message
+    //                 // }).sort((mess1, mess2) => mess1.timestamp - mess2.timestamp)
+    //                 // setMessages(prev => prev.concat(messageFireStore))
+    //                 // })
+                    
+    //     return unsubcribe
+    // }, [route])
 
     return (
         <KeyboardAvoidingView behavior={'height'} keyboardVerticalOffset={90} style={{flex: 1}}>
-            <ScrollView>
-                {messages.map(({ id, data }) => (
-                    data.email == auth.currentUser.email ? (
-                        <UserChatWrapper key={id} style={{width: 100}}>
-                            <UserChatText>{data.message}</UserChatText>
-                            <Text>{data.timestamp}</Text>
-                        </UserChatWrapper>
-                    ) : (
-                        <User2ChatWrapper>
-                            <User2ChatText>{data.message}</User2ChatText>
-                            <Text>{data.timestamp}</Text>
+            <ScrollView style={{zIndex: 3}}>
+                {
+                    messages.map((message, i) => (
+                        <User2ChatWrapper key={i}>
+                             <UserChatText>{message.message}</UserChatText>
                         </User2ChatWrapper>
                     )
-                ))}
+                    )
+                        // m.email == auth.currentUser.email ? (
+                           
+                        //      <Text>{data.timestamp}</Text> 
+                        // ) : (
+                        //     <User2ChatWrapper>
+                        //         <User2ChatText>{data.message}</User2ChatText>
+                        //         <Text>{data.timestamp}</Text>
+                        //     </User2ChatWrapper>
+                        // )
+                }
             </ScrollView>
+
             <View style={{flexDirection: "row", alignItems: 'center', padding: 16}}>
                 <ChatBar 
                     value={input}
                     onChangeText={(text) => setInput(text)}
                     placeholder="Type ..."
                 />
-                <TouchableOpacity activeOpacity={0.7} onPress={() => sendMessage(input)} style={{padding: 16}}>
+                <TouchableOpacity activeOpacity={0.7} onPress={sendMessage} style={{padding: 16}}>
                     <Ionicons name="send" size={24} color="#346eeb"/>
                 </TouchableOpacity>
             </View>

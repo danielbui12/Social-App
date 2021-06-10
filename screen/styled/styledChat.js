@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.View`
     flex: 1;
-    padding-vertical: 20px;
     background-color: #fff;
     align-items: center;
 `
@@ -79,30 +78,35 @@ export const ChatBar = styled.TextInput`
 `
 
 export const UserChatWrapper = styled.View`
+    margin-top: 4%;
     border-radius: 20px;
-    background-color: "#3086fb";
+    background-color: #3086fb;
     margin-right: 10px;
     align-self: flex-end;
-    margin-bottom: 20px;
-    max-width: 80%
+    max-width: 80%;
 `
 
-export const UserChatText = styled.View`
+export const UserChatText = styled.Text`
     font-size:16px;
-    font-weight: 800;
+    font-weight: 700;
     color: #fff;
     padding: 8px;
 `
 
 export const User2ChatWrapper = styled.View`
+    margin-top: 4%;
     border-radius: 20px;
-    background-color: "#aaaaae";
-    margin-right: 10px;
     align-self: flex-end;
-    margin-bottom: 20px;
-    max-width: 80%
+    max-width: 80%;
+    background-color: #aaaaae;
+    margin-left: 10px;
+    align-self: flex-start;
+    max-width: 80%;
 `
 
-export const User2ChatText = styled.View`
-
+export const User2ChatText = styled.Text`
+    font-size:16px;
+    font-weight: 700;
+    color: #fff;
+    padding: 8px;
 `
