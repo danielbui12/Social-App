@@ -124,17 +124,3 @@ export const StatusWrapper = styled.View`
     align-items: center;
     margin-bottom: 8px;
 `
-
-export const PostButton = styled.TouchableOpacity`
-    width: 80px;
-    align-items: center;
-    border-radius: 10px;
-    margin-right: 8px;
-    background-color: #3086fb;
-`
-export const PostText = styled.Text`
-    font-size: 16px; 
-    font-weight: bold; 
-    padding: 8px;
-    color: #fff; 
-`

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
-  AddImage,
-  PostButton,
-  PostText
+  AddImage
 } from "../styled/styledHome"
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';

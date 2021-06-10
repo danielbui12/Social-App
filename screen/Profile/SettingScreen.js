@@ -10,7 +10,7 @@ function SettingScreen() {
     return (
         <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <ScrollView>
-                <Button title="Log out" onPress={() => logOut()}/>
+                <Button title="Log out" onPress={logOut}/>
             </ScrollView>
         </SafeAreaView>
     )
