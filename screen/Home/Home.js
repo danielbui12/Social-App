@@ -8,8 +8,8 @@ import {
  } from '../styled/styledHome'
 import { FlatList } from 'react-native'
 import Post from "../../Components/Post"
-import { auth } from '../../Constant/firebase'
-
+// import { auth } from '../../Constant/firebase'
+// {uri: auth?.currentUser?.photoURL } ||
 export default HomeScreen = ({ navigation }) => {
     const User = [
       {
@@ -47,7 +47,7 @@ export default HomeScreen = ({ navigation }) => {
     return (
       <Container>
         <UserStatus>
-          <Avartar source={{uri: auth.currentUser.photoURL }} />
+          <Avartar source={require('../../images/default-avartar.png')} />
           <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
             <TextStatus>What's on your mind ... ?</TextStatus>
           </TextStatusWrapper>

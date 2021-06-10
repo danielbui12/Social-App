@@ -1,7 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import MessageList from './MessageList'
 import Message from './Message'
-import UserChat from './UserChat'
+import AddChatScreen from './AddChatScreen'
 
 
 const Stack = createStackNavigator()
@@ -9,14 +10,17 @@ const Stack = createStackNavigator()
 function ChatScreen() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Messages" component={Message}/>
+            <Stack.Screen 
+                name="Messages" 
+                component={MessageList}
+            />
             <Stack.Screen 
                 name="Chat" 
-                component={UserChat}
-                options={({ route }) => ({
-                    title: route.params.userName,
-                    headerBackTitleVisible: false,
-                })}
+                component={Message}
+            />
+            <Stack.Screen 
+                name="AddChat" 
+                component={AddChatScreen}
             />
         </Stack.Navigator>
     )

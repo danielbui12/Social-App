@@ -8,7 +8,13 @@ const Stack = createStackNavigator()
 const StoryScreen = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen}/>
+      <Stack.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24}
+        }}
+      />
       <Stack.Screen name="Post" component={PostScreen} options={{headerBackTitleVisible: false}}/>
     </Stack.Navigator>
   )
