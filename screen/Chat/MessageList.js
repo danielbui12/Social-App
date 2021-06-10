@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity } from 'react-native'
+import { ScrollView, TouchableOpacity, Alert } from 'react-native'
 import { Container } from '../styled/styledChat'
 import { auth, db } from '../../Constant/firebase'
 import { SimpleLineIcons as Icon } from 'react-native-vector-icons'
@@ -41,14 +41,13 @@ const MessageList = ({ navigation }) => {
             id: id,
             userName: chatName
         })
-
     }
 
     return(
         <Container>
             <ScrollView>
                 {messageList.map(({ id, data: { chatName }}) => (
-                    <CustomList key={id} chatName={chatName} enterChat={enterChat}/>
+                    <CustomList key={id} id={id} chatName={chatName} enterChat={enterChat}/>
                 ))}
             </ScrollView>
         </Container>
