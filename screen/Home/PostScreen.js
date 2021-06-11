@@ -36,9 +36,8 @@ export default PostScreen = ({ navigation }) => {
     
     const takePhoto = async () => {
       let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect:[4,3],
+        aspect:[3,4],
         quality: 1,
       })
   
@@ -51,7 +50,7 @@ export default PostScreen = ({ navigation }) => {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [3, 4],
         quality: 1,
       })
   
