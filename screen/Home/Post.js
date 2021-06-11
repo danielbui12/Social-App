@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
+import { Platform, Alert, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
   AddImage,
   CustomInput
@@ -64,9 +64,11 @@ export default PostScreen = ({ navigation }) => {
     }
 
     const upload = async () => {
+      if(!userStt)  return
+
       setUpLoading(true)
       const imageUrl = await uploadImg()
-      // Alert.alert(imageUrl)
+
       db.collection('posts').add({
         userName: auth.currentUser.displayName,
         userImg: auth.currentUser.photoURL,
@@ -75,7 +77,7 @@ export default PostScreen = ({ navigation }) => {
         postImg: imageUrl,
         postTime: Date.now(),
         likes: 0,
-        liked: false,
+        liked: {},
         comments: 0
       }).then(() => {
         Alert.alert("Successful!", "Your post has been uploaded!")
@@ -112,8 +114,7 @@ export default PostScreen = ({ navigation }) => {
   
     return (
       <>
-        <KeyboardAvoidingView behavior={"height"} style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          {image != null  && <AddImage source={{ uri: image }}/>}
+        <KeyboardAvoidingView behavior={Platform.OS=="ios" ? 'padding': "height"} style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
           <CustomInput 
             placeholder= "What's on your mind ?"
             value={userStt} 
@@ -121,6 +122,7 @@ export default PostScreen = ({ navigation }) => {
             autoCorrect={false}
             numberOfLines={3}
           />
+          {image != null  && <AddImage source={{ uri: image }}/>}
         </KeyboardAvoidingView>
         {uploading && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
         <ActionButton buttonColor="rgba(231,76,60,1)">

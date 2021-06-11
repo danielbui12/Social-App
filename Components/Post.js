@@ -45,7 +45,7 @@ const Post = ({ item, onDeletePost }) => {
         <UserText>
           <UserName>{item.name}</UserName>
           
-          <UserActive>{moment(item.active.toDate()).fromNow()}</UserActive>
+          <UserActive>{moment(item.active).fromNow()}</UserActive>
         </UserText>
       </UserInfo>
 
