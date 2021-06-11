@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native'
 import FormInput from '../../Components/FormInput'
 import SocialButton from '../../Components/SocialButton'
 import FormButton from '../../Components/FormButton'
@@ -15,7 +15,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.container}>
             <View style={styles.logo}/>
 
-            <KeyboardAvoidingView behavior={'padding'}>
+            <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
                 <FormInput
                     labelVal={email}
                     onChangeText={userEmail => setEmail(userEmail)}
@@ -37,7 +37,10 @@ export default function LoginScreen({ navigation }) {
             
             <FormButton 
                 buttonTitle="Sign In"
-                onPress={() => login(email, pass)}
+                onPress={() => {
+                    if(email == '' || pass == '') return null
+                    login(email, pass)
+                }}
             />
 
             <TouchableOpacity style={styles.forgotButton}>

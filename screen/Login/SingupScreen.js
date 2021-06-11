@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView, Platform, View } from 'react-native'
 import FormInput from '../../Components/FormInput'
 import { auth } from '../../Constant/firebase'
 
@@ -13,7 +13,7 @@ export default function LoginScreen({ navigation }) {
         .then(authUser => {
             authUser.user.updateProfile({
                 displayName: name,
-                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/images.png?alt=media&token=eb825db0-ce85-47a8-a6ac-14f3d1af673c",
+                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6",
             })
         }).catch(err => {
             console.log(err)
@@ -21,41 +21,40 @@ export default function LoginScreen({ navigation }) {
     }
 
     return (
-        <KeyboardAvoidingView behavior={"height"} style={styles.container}>
-            <Text style={styles.text}>Create an account</Text>
-               
-            <FormInput
-                labelVal={name}
-                onChangeText={name => setName(name)}
-                placeholder='Full name'
-                iconName='user'
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
+        <KeyboardAvoidingView behavior={ Platform.OS == 'ios' ? 'padding' :"height"} style={styles.container}>
+                <Text style={styles.text}>Create an account</Text>
+                
+                <FormInput
+                    labelVal={name}
+                    onChangeText={name => setName(name)}
+                    placeholder='Full name'
+                    iconName='user'
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
 
-            <FormInput
-                labelVal={email}
-                onChangeText={userEmail => setEmail(userEmail)}
-                placeholder='Email'
-                iconName='user'
-                keyBoardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
+                <FormInput
+                    labelVal={email}
+                    onChangeText={userEmail => setEmail(userEmail)}
+                    placeholder='Email'
+                    iconName='user'
+                    keyBoardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
 
-            <FormInput 
-                labelVal={pass}
-                onChangeText={userPass => setPass(userPass)}
-                placeholder='Password'
-                iconName='lock'
-                secureTextEntry={true}
-            />
+                <FormInput 
+                    labelVal={pass}
+                    onChangeText={userPass => setPass(userPass)}
+                    placeholder='Password'
+                    iconName='lock'
+                    secureTextEntry={true}
+                />
 
-            <FormButton 
-                buttonTitle="Register"
-                onPress={register}
-            />
-
+                <FormButton 
+                    buttonTitle="Register"
+                    onPress={register}
+                />
             <TouchableOpacity style={styles.navButton} onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.navButtonText}>Have an account? Sign In!</Text>
             </TouchableOpacity>

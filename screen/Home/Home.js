@@ -9,54 +9,12 @@ import {
 import { Alert, FlatList, ActivityIndicator } from 'react-native'
 import Post from "../../Components/Post"
 import { auth, db } from '../../Constant/firebase'
+import { Ionicons } from 'react-native-vector-icons'
 
 export default HomeScreen = ({ navigation }) => {
     const [listPost, setListPost] = useState([])
     const [deleting, setDeleting] = useState(false)
     const [isLoading, setIsloading] = useState(false)
-
-    const fetchData = useCallback(async () => {
-      setIsloading(true)
-
-      let List = []
-      const data = await db.collection('posts')
-        .orderBy('timestamp', 'desc')
-        .get()
-        .then(snapshot => {
-          snapshot.forEach(doc => {
-            const { 
-              post, 
-              postImg, 
-              userId,
-              userName,
-              postTime,
-              likes,
-              comments,
-              userImg,
-              liked
-            } = doc.data()
-            
-            List.push({
-              id: doc.id,
-              name: userName,
-              userImg: userImg,
-              userId: userId,
-              caption: post,
-              img: postImg,
-              active: postTime,
-              likes: likes,
-              liked: liked,
-              comment: comments
-            }).sort((post1, post2) => post1.active - post2.active)
-
-            setListPost(List)
-            setIsloading(false)
-          })
-        })
-
-        return data
-    })
-
 
     useEffect(() => {
       let List = []
@@ -121,7 +79,9 @@ export default HomeScreen = ({ navigation }) => {
           <Avartar source={{ uri: auth.currentUser.photoURL }} />
           <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
             <TextStatus>What's on your mind ... ?</TextStatus>
+            <Ionicons name="send" size={24} color="#346eeb"/>
           </TextStatusWrapper>
+
         </UserStatus>
 
         {(deleting || isLoading) && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}

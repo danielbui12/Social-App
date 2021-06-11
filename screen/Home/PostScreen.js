@@ -98,17 +98,15 @@ export default PostScreen = ({ navigation }) => {
       try {
         const response = await fetch(image)
         const blob = await response.blob()
-        await storage.ref().child(`posts/userId/${fileName}`).put(blob)
+        await storage.ref().child(`${auth.currentUser.uid}/posts/${fileName}`).put(blob)
 
-        var ref = storage.ref().child(`posts/userId/${fileName}`).put(blob)
+        var ref = storage.ref().child(`${auth.currentUser.uid}/posts/${fileName}`).put(blob)
         newImageUri = await ref.snapshot.ref.getDownloadURL()
         return newImageUri
       } catch(err) {
         console.log(err)
         return null
       }
-
-     
     }
   
     return (

@@ -8,7 +8,7 @@ import SignupScreen from '../screen/Login/SingupScreen'
 const Stack = createStackNavigator();
 
 function AuthStack() {
-  const [isFirstLaunch, setIsFirstLaunch] = useState(null)
+  const [isFirstLaunch, setIsFirstLaunch] = useState(true)
   let routeName
 
   useEffect(() => {
@@ -21,9 +21,7 @@ function AuthStack() {
   }, [])
 
 
-  if(isFirstLaunch == null) {
-    return null;
-  } else if (isFirstLaunch == true) {
+  if (isFirstLaunch == true) {
     routeName = "Board"
   } else {
     routeName = "Login"

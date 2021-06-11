@@ -18,20 +18,20 @@ export default function OnBoardScreen({ navigation }) {
             onDone={() => navigation.replace("Login")}
             pages={[
                 {
-                    backgroundColor: '#fff',    
-                    image: <Image source={require('../../images/1.jpg')} />,
+                    backgroundColor: '#00bfa5',    
+                    image: <Image source={require('../../images/onboarding-img1.png')} />,
                     title: 'Connect to the World',
                     subtitle: 'A New Way To Connect To The World',
                 },
                 {
-                    backgroundColor: '#fff',
-                    image: <Image source={require('../../images/1.jpg')} />,
+                    backgroundColor: '#6683af',
+                    image: <Image source={require('../../images/onboarding-img2.png')} />,
                     title: 'Share your favorite',
                     subtitle: 'Share Your Thoughts With Similar Kind Of People',
                 },
                 {
-                    backgroundColor: '#fff',
-                    image: <Image source={require('../../images/1.jpg')} />,
+                    backgroundColor: '#825790',
+                    image: <Image source={require('../../images/onboarding-img3.png')} />,
                     title: 'Become the Start',
                     subtitle: 'Let The Spot Light Capture You',
                 },

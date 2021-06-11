@@ -46,12 +46,6 @@ export const Caption = styled.Text`
     padding-right: 16px;
 `
 
-export const PostImg = styled.Image`
-    width: 100%;
-    height: 250px;
-    margin-top: 16px;
-`
-
 export const Divided = styled.View`
     border: 1px solid #333;
     border-bottom-width: 1px;
@@ -96,22 +90,28 @@ export const Avartar = styled.Image`
     justify-content: flex-start;
 `
 export const TextStatusWrapper = styled.TouchableOpacity`
-    justify-content: center;
-    margin-left: 20%;
+    flex-direction: row;
+    align-self: center;
 `
 
 export const TextStatus = styled.Text`
     font-size: 15px;
     opacity: 0.3;
     font-weight: bold;
+    margin-horizontal: 32px;
 `
 export const AddImage = styled.Image`
     flex:1;
-    height: 250px;
     width: 100%;
-    margin-top: 32px;
+    height: 350px;
     margin-bottom: 16px;
     align-self: center;
+`
+
+export const PostImg = styled.Image`
+    width: 100%;
+    height: 350px;
+    margin-top: 16px;
 `
 
 export const ButtonWrapper = styled.Text`
@@ -130,6 +130,6 @@ export const CustomInput = styled.TextInput`
     flex: 1; 
     align-self: center; 
     width: 80%;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     text-align: center;
 `
