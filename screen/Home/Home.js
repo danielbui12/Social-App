@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     Container,
     UserStatus,
@@ -6,55 +6,85 @@ import {
     TextStatusWrapper,
     TextStatus
  } from '../styled/styledHome'
-import { FlatList } from 'react-native'
+import { Alert, FlatList, ActivityIndicator } from 'react-native'
 import Post from "../../Components/Post"
-// import { auth } from '../../Constant/firebase'
-// {uri: auth?.currentUser?.photoURL } ||
+import { auth, db } from '../../Constant/firebase'
+
 export default HomeScreen = ({ navigation }) => {
-    const User = [
-      {
-        id: 0,
-        name: "Jenny Doe",
-        active: "4 hours ago",
-        caption: "Hi there !",
-        img: 'none',
-        liked: false,
-        likes: "0",
-        comment: "4"
-      },
-      {
-        id: 1,
-        name: "Martin John",
-        active: "1 hours ago",
-        caption: "Hi friends!",
-        img: require("../../images/1.jpg"),
-        liked: false,
-        likes: "2",
-        comment: "0"
-      },
-      {
-        id: 2,
-        name: "Denis Bucu",
-        active: "3 hours ago",
-        caption: "Hello mother f*cker!",
-        img: 'none',
-        liked: true,
-        likes: "0",
-        comment: "0"
-      },
-    ];
-  
+    const [listPost, setListPost] = useState([])
+    const [deleting, setDeleting] = useState(false)
+    useEffect(() => {
+      let List = []
+      const unsubcribe = db.collection('posts').orderBy('postTime', 'desc').get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const { 
+            post, 
+            postImg, 
+            userId,
+            userName,
+            postTime,
+            likes,
+            comments,
+            userImg,
+            liked
+          } = doc.data()
+
+          List.push({
+            id: doc.id,
+            name: userName,
+            userImg: userImg,
+            userId: userId,
+            caption: post,
+            img: postImg,
+            active: postTime,
+            likes: likes,
+            liked: liked,
+            comment: comments
+          })
+        })
+        setListPost(List)
+      })
+
+      return unsubcribe
+    },[])
+
+    const deletePost = (postId) => {
+      Alert.alert("Warning!!!", "Do you wanna to delete this post??", 
+        [
+          {
+            text: "No",
+          },
+          { 
+            text: "Yes", 
+            onPress: () => {
+              setDeleting(true)
+              db.collection("posts")
+                .doc(postId)
+                .delete()
+                .then(() => {
+                  Alert.alert("Deleted!")
+                  setDeleting(false)
+                  unsubcribe()
+                })},
+          }
+        ])
+
+    }
+
     return (
       <Container>
         <UserStatus>
-          <Avartar source={require('../../images/default-avartar.png')} />
+          <Avartar source={{ uri: auth.currentUser.photoURL }} />
           <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
             <TextStatus>What's on your mind ... ?</TextStatus>
           </TextStatusWrapper>
         </UserStatus>
+
+        {deleting && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
+        
         <FlatList
-          data={User}
-          renderItem={({ item }) => <Post item={item} />}
+          data={listPost}
+          renderItem={({ item }) => <Post item={item} onDeletePost={deletePost}/>}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
           style={{flexGrow: 0, width: "90%"}}

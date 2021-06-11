@@ -74,12 +74,11 @@ export const ChatBar = styled.TextInput`
     color: grey;
     padding: 10px;
     height: 40px;
-    margin-right: 8px;
 `
 
 export const UserChatWrapper = styled.View`
-    margin-top: 3%;
-    border-radius: 20px;
+    margin-top: 2%;
+    border-radius: 10px;
     background-color: #3086fb;
     margin-right: 10px;
     align-self: flex-end;
@@ -95,13 +94,17 @@ export const UserChatText = styled.Text`
 
 export const User2ChatWrapper = styled.View`
     margin-top: 4%;
-    border-radius: 20px;
     align-self: flex-end;
     max-width: 80%;
-    background-color: #aaaaae;
     margin-left: 10px;
     align-self: flex-start;
     max-width: 80%;
+    flex-direction: row;
+`
+export const User2ChatTextWrapper = styled.View`
+    border-radius: 10px;
+    background-color: #aaaaae;
+    margin-left: 12px;
 `
 
 export const User2ChatText = styled.Text`
@@ -109,4 +112,10 @@ export const User2ChatText = styled.Text`
     font-weight: 700;
     color: #fff;
     padding: 8px;
+`
+
+export const User2Img = styled.Image`
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
 `

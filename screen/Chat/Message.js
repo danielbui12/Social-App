@@ -8,7 +8,9 @@ import {
     UserChatWrapper,
     UserChatText,
     User2ChatWrapper,
-    User2ChatText
+    User2ChatText,
+    User2Img,
+    User2ChatTextWrapper
 } from '../styled/styledChat'
 import { 
     Text, 
@@ -16,7 +18,8 @@ import {
     KeyboardAvoidingView, 
     ScrollView,
     View,
-    Keyboard
+    Keyboard,
+    Platform
 } from 'react-native'
 import { Ionicons, FontAwesome } from 'react-native-vector-icons'
 import { auth, db } from '../../Constant/firebase'
@@ -93,7 +96,7 @@ const Message = ({ navigation, route }) => {
       }, [route])
 
     return (
-        <KeyboardAvoidingView behavior={'height'} keyboardVerticalOffset={90} style={{flex: 1}}>
+        <KeyboardAvoidingView behavior={Platform.OS == "ios" ? 'padding' :'height'} keyboardVerticalOffset={90} style={{flex: 1}}>
             <ScrollView>
                 {
                     messages.map(({ id, data }) => (
@@ -103,7 +106,10 @@ const Message = ({ navigation, route }) => {
                             </UserChatWrapper>
                        ) : (
                            <User2ChatWrapper key={id}>
-                               <User2ChatText>{data.message}</User2ChatText>
+                               <User2Img source={uri}/>
+                               <User2ChatTextWrapper>
+                                <User2ChatText>{data.message}</User2ChatText>
+                               </User2ChatTextWrapper>
                            </User2ChatWrapper>
                        )
                     ))

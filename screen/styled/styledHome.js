@@ -109,6 +109,7 @@ export const AddImage = styled.Image`
     flex:1;
     height: 250px;
     width: 100%;
+    margin-top: 32px;
     margin-bottom: 16px;
     align-self: center;
 `

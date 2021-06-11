@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { TextInput, Platform, Alert, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 import {
   AddImage,
@@ -7,13 +7,15 @@ import {
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
-import { storage } from '../../Constant/firebase'
-
+import { storage, db, auth } from '../../Constant/firebase'
+import { AuthContext } from '../../Navigation/AuthProvider'
 
 export default PostScreen = ({ navigation }) => {
     const [userStt, setUserStt] = useState("");
     const [image, setImage] = useState(null);
     const [uploading, setUpLoading] = useState(false)
+
+    const { user } = useContext(AuthContext)
   
     let styles = {
       fontSize: 20,
@@ -62,28 +64,50 @@ export default PostScreen = ({ navigation }) => {
     }
 
     const upload = async () => {
-      if(!image && userStt.trim().length == 0)  return
       setUpLoading(true)
+      const imageUrl = await uploadImg()
+      // Alert.alert(imageUrl)
+      db.collection('posts').add({
+        userName: auth.currentUser.displayName,
+        userImg: auth.currentUser.photoURL,
+        userId: user.uid,
+        post: userStt,
+        postImg: imageUrl,
+        postTime: Date.now(),
+        likes: 0,
+        liked: false,
+        comments: 0
+      }).then(() => {
+        Alert.alert("Successful!", "Your post has been uploaded!")
+        setImage(null)
+        setUserStt('')
+        setUpLoading(false)
+      }).catch(err => Alert.alert("Something went wrong!"))
+    }
+
+    const uploadImg = async () => {
+      if(!image) return null
+
       let fileName = image.substring(image.lastIndexOf("/") + 1);
       const extension = fileName.split(".").pop(); //duoi file
       const name = fileName.split(".").slice(0,-1).join(".");
       fileName = name + Date.now() + "." + extension;
   
-      // console.log(name)
       let newImageUri
-  
-      if(image) {
+      try {
         const response = await fetch(image)
         const blob = await response.blob()
-        await storage.ref().child(fileName).put(blob)
-        var ref = storage.ref().child(fileName).put(blob)
-      
+        await storage.ref().child(`posts/userId/${fileName}`).put(blob)
+
+        var ref = storage.ref().child(`posts/userId/${fileName}`).put(blob)
         newImageUri = await ref.snapshot.ref.getDownloadURL()
+        return newImageUri
+      } catch(err) {
+        console.log(err)
+        return null
       }
 
-      setUpLoading(false)
-      setImage(null)
-      setUserStt('')
+     
     }
   
     return (

@@ -5,8 +5,6 @@ import { auth, db } from '../../Constant/firebase'
 import { SimpleLineIcons as Icon } from 'react-native-vector-icons'
 import CustomList from '../../Components/CustomList'
 
-let uri = require('../../images/default-avartar.png')
-
 const MessageList = ({ navigation }) => {
     const [messageList, setMessageList] = useState([])
 
