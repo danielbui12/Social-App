@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Platform, Alert, ActivityIndicator, KeyboardAvoidingView } from "react-native";
+import { Platform, Alert, ActivityIndicator, KeyboardAvoidingView, Button } from "react-native";
 import {
   AddImage,
   CustomInput

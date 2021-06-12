@@ -1,19 +1,22 @@
-import React, { useContext } from 'react'
-import { View, Button, SafeAreaView, ScrollView } from 'react-native'
-import {AuthContext} from '../../Navigation/AuthProvider'
+import React from "react"
+import { createStackNavigator } from '@react-navigation/stack'
+import ProfileScreen from './ProfileScreen'
+import EditScreen from "./EditScreen"
 
+const Stack = createStackNavigator()
 
-function SettingScreen() {
-
-    const { logOut } = useContext(AuthContext)
-
-    return (
-        <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <ScrollView>
-                <Button title="Log out" onPress={logOut}/>
-            </ScrollView>
-        </SafeAreaView>
-    )
+const SettingScreen = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Profile" 
+        component={ProfileScreen}
+        options={{ header: () => null }}
+      />
+      <Stack.Screen name="Edit" component={EditScreen} options={{headerBackTitleVisible: false}}/>
+    </Stack.Navigator>
+  )
 }
+
 
 export default SettingScreen

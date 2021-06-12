@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import {
     Container,
     UserStatus,
@@ -6,15 +6,18 @@ import {
     TextStatusWrapper,
     TextStatus
  } from '../styled/styledHome'
-import { Alert, FlatList, ActivityIndicator } from 'react-native'
+import { ScrollView, ActivityIndicator } from 'react-native'
 import Post from "../../Components/Post"
 import { auth, db } from '../../Constant/firebase'
 import { Ionicons } from 'react-native-vector-icons'
+import Loading from '../../Components/Loading'
+import { AuthContext } from '../../Navigation/AuthProvider'
 
 export default HomeScreen = ({ navigation }) => {
     const [listPost, setListPost] = useState([])
-    const [deleting, setDeleting] = useState(false)
-    const [isLoading, setIsloading] = useState(false)
+    const [isLoading, setIsloading] = useState(true)
+    const {deleting} = useContext(AuthContext)
+    const { deletePost } = useContext(AuthContext)
 
     useEffect(() => {
       let List = []
@@ -46,31 +49,16 @@ export default HomeScreen = ({ navigation }) => {
           })
         })
         setListPost(List)
+        if(isLoading) setIsloading(false)
       })
 
       // return unsubcribe
     },[listPost])
 
-    const deletePost = (postId) => {
-      Alert.alert("Warning!!!", "Do you wanna to delete this post??", 
-        [
-          {
-            text: "No",
-          },
-          { 
-            text: "Yes", 
-            onPress: () => {
-              setDeleting(true)
-              db.collection("posts")
-                .doc(postId)
-                .delete()
-                .then(() => {
-                  Alert.alert("Deleted!")
-                  setDeleting(false)
-                })},
-          }
-        ])
-
+    if(isLoading) {
+      return (
+        <Loading />
+      )
     }
 
     return (
@@ -84,15 +72,21 @@ export default HomeScreen = ({ navigation }) => {
 
         </UserStatus>
 
-        {(deleting || isLoading) && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
+        {deleting  && 
+          <ActivityIndicator 
+            style={{
+              position: 'absolute', 
+              zIndex: 2, 
+              bottom: 10, 
+              alignSelf: 'center'
+            }} size={100} color="#3485e4"/>
+        }
         
-        <FlatList
-          data={listPost}
-          renderItem={({ item }) => <Post item={item} onDeletePost={deletePost}/>}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          style={{flexGrow: 0, width: "90%"}}
-        />
+        <ScrollView style={{width: "90%"}} showsVerticalScrollIndicator={false}>
+          {listPost.map(( item ) => (
+            <Post key={item.id} item={item} onDeletePost={deletePost}/>
+          ))}
+        </ScrollView>
       </Container>
     )
   };
