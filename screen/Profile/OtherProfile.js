@@ -5,7 +5,7 @@ import {AuthContext} from '../../Navigation/AuthProvider'
 import Post from '../../Components/Post'
 import LoadingProfile from '../../Components/LoadingProfile'
 
-function ProfileScreen() {
+function OtherProfile() {
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setIsloading] = useState(true)
     const { logOut, deletePost, deleting } = useContext(AuthContext)
@@ -62,4 +62,4 @@ function ProfileScreen() {
     )
 }
 
-export default ProfileScreen
+export default OtherProfile

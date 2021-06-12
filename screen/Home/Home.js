@@ -13,11 +13,11 @@ import { Ionicons } from 'react-native-vector-icons'
 import Loading from '../../Components/Loading'
 import { AuthContext } from '../../Navigation/AuthProvider'
 
+
 export default HomeScreen = ({ navigation }) => {
     const [listPost, setListPost] = useState([])
     const [isLoading, setIsloading] = useState(true)
-    const {deleting} = useContext(AuthContext)
-    const { deletePost } = useContext(AuthContext)
+    const { deleting, deletePost } = useContext(AuthContext)
 
     useEffect(() => {
       let List = []
@@ -81,11 +81,13 @@ export default HomeScreen = ({ navigation }) => {
               alignSelf: 'center'
             }} size={100} color="#3485e4"/>
         }
-        
+
         <ScrollView style={{width: "90%"}} showsVerticalScrollIndicator={false}>
-          {listPost.map(( item ) => (
-            <Post key={item.id} item={item} onDeletePost={deletePost}/>
-          ))}
+          {
+            listPost.map((item) => (
+              <Post key={item.id} item={item} onDeletePost={deletePost}/>
+            ))
+          }
         </ScrollView>
       </Container>
     )
