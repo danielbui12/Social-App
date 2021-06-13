@@ -63,26 +63,26 @@ export default HomeScreen = ({ navigation }) => {
 
     return (
       <Container>
-        <UserStatus>
-          <Avartar source={{ uri: auth.currentUser.photoURL }} />
-          <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
-            <TextStatus>What's on your mind ... ?</TextStatus>
-            <Ionicons name="send" size={24} color="#346eeb"/>
-          </TextStatusWrapper>
-
-        </UserStatus>
+          
 
         {deleting  && 
           <ActivityIndicator 
-            style={{
-              position: 'absolute', 
-              zIndex: 2, 
-              bottom: 10, 
-              alignSelf: 'center'
+          style={{
+            position: 'absolute', 
+            zIndex: 2, 
+            bottom: 10, 
+            alignSelf: 'center'
             }} size={100} color="#3485e4"/>
         }
 
         <ScrollView style={{width: "90%"}} showsVerticalScrollIndicator={false}>
+          <UserStatus>
+            <Avartar source={{ uri: auth.currentUser.photoURL }} />
+            <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
+              <TextStatus>What's on your mind ... ?</TextStatus>
+              <Ionicons name="send" size={24} color="#346eeb"/>
+          </TextStatusWrapper>
+          </UserStatus>
           {
             listPost.map((item) => (
               <Post key={item.id} item={item} onDeletePost={deletePost}/>

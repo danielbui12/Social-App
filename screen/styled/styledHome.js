@@ -20,9 +20,10 @@ export const UserInfo = styled.View`
 
 `
 export const UserImg = styled.Image`
-    width: 50px;
-    height: 50px;
+    width: 45;
+    height: 45px;
     border-radius: 50;
+    margin-top: 4px;
 `
 
 export const UserText = styled.View`
@@ -78,7 +79,7 @@ export const InteractionText = styled.Text`
 
 export const UserStatus = styled.View`
     flex-direction: row;
-    width: 90%;
+    width: 100%;
     margin-vertical: 24px;
     background-color: #eee;
 `
@@ -103,8 +104,8 @@ export const TextStatus = styled.Text`
 export const AddImage = styled.Image`
     flex:1;
     width: 100%;
-    height: 350px;
-    margin-bottom: 16px;
+    height: 500;
+    margin-vertical: 16px;
     align-self: center;
 `
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Platform, Alert, ActivityIndicator, KeyboardAvoidingView, Button } from "react-native";
+import { Platform, 
+  Alert, ActivityIndicator, KeyboardAvoidingView, ScrollView } from "react-native";
 import {
   AddImage,
   CustomInput
@@ -111,17 +112,20 @@ export default PostScreen = ({ navigation }) => {
   
     return (
       <>
-        <KeyboardAvoidingView behavior={Platform.OS=="ios" ? 'padding': "height"} style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+      <ScrollView style={{ flex: 1}} centerContent={true}>
+        <KeyboardAvoidingView behavior={Platform.OS=="ios" ? 'padding': "height"} style={{justifyContent: 'center', alignItems: 'center'}}>
           <CustomInput 
             placeholder= "What's on your mind ?"
             value={userStt} 
             onChangeText={(text) => setUserStt(text)}
             autoCorrect={false}
             numberOfLines={3}
+            
           />
           {image != null  && <AddImage source={{ uri: image }}/>}
         </KeyboardAvoidingView>
         {uploading && <ActivityIndicator style={{position: 'absolute', zIndex: 2, bottom: 10, alignSelf: 'center'}} size={100} color="#3485e4"/>}
+      </ScrollView>
         <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#3498db' title="Add Image" onPress={pickImage}>
             <Icon name="md-image" style={styles} />
