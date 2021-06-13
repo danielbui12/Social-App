@@ -14,10 +14,10 @@ import {
   InteractionText,
   Divided
 } from "../screen/styled/styledHome";
-import { AuthContext } from '../Navigation/AuthProvider'
+import { AuthContext,View } from '../Navigation/AuthProvider'
 import moment from 'moment'
 
-const Post = ({ item, onDeletePost }) => {
+const Post = ({ item, onDeletePost, onSeeProfile }) => {
   const { user } = useContext(AuthContext)
 
   let liked = item.liked ? "heart" : "heart-outline"
@@ -43,7 +43,7 @@ const Post = ({ item, onDeletePost }) => {
       <UserInfo>
         <UserImg source={{uri: item.userImg}} />
         <UserText>
-          <UserName>{item.name}</UserName>
+          <UserName onPress={onSeeProfile}>{item.name}</UserName>
           
           <UserActive>{moment(item.active).fromNow()}</UserActive>
         </UserText>

@@ -9,10 +9,12 @@ export default LoadingProfile = () => {
             <View style={{marginTop: 50}}/>
             <SkeletonPlaceholder>
                 <View style={{justifyContent: "center", alignItems:'center', marginTop: 16, marginBottom: 40}}>
-                    <View style={{width: 120, height:120, borderRadius: 60, marginBottom: 24 }}/>
+                    <View style={{width: 150, height:150, borderRadius: 70, marginBottom: 17 }}/>
+                    <View style={{width: 150, height: 27, marginBottom: 10}}/>
+                    <View style={{width: 100, height: 27, marginBottom: 30}}/>
                     <View style={{flexDirection: "row", marginTop: 8}}>
-                        <View style={{width: 80, height: 40, marginRight: 24}}/>
-                        <View style={{width: 80, height: 40}}/>
+                        <View style={{width: 100, height: 50, marginRight: 24}}/>
+                        <View style={{width: 100, height: 50}}/>
                     </View>
                 </View>
                 <View style={{ flexDirection: "row", alignItems: 'center'}}>

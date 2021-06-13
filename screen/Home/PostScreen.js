@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { storage, db, auth } from '../../Constant/firebase'
 import { AuthContext } from '../../Navigation/AuthProvider'
+import * as Permissions from 'expo-permissions'
 
 export default PostScreen = ({ navigation }) => {
     const [userStt, setUserStt] = useState("");
@@ -36,6 +37,7 @@ export default PostScreen = ({ navigation }) => {
     }, []);
     
     const takePhoto = async () => {
+      await Permissions.askAsync(Permissions.CAMERA)
       let result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect:[3,4],
@@ -64,10 +66,10 @@ export default PostScreen = ({ navigation }) => {
     }
 
     const upload = async () => {
-      if(!userStt)  return
+      const imageUrl = await uploadImg()
+      if(!userStt && !imageUrl)  return
 
       setUpLoading(true)
-      const imageUrl = await uploadImg()
 
       db.collection('posts').add({
         userName: auth.currentUser.displayName,

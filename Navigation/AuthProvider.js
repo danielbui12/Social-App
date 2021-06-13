@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react'
 import { Alert } from 'react-native'
-import { auth, db } from '../Constant/firebase'
+import { auth, db, storage } from '../Constant/firebase'
 
 export const AuthContext = createContext()
 
@@ -39,15 +39,23 @@ const AuthProvider = ({ children }) => {
                             setDeleting(true)
                             db.collection("posts")
                               .doc(postId)
-                              .delete()
-                              .then(() => {
+                              .get()
+                              .then((snapshot) => {
+                                const { postImg } = snapshot.data()
+                                if(postImg) {
+                                    const storeRef = storage.refFromURL(postImg)
+                                    const ImgRef = storage.ref(storeRef.fullPath)
+
+                                    ImgRef.delete().then(() => deleteFirestoreData(postId))
+                                }    
                                 Alert.alert("Deleted!")
                                 setDeleting(false)
-                              })},
+                              })
+                            },
                         }
                       ])
               
-                  }
+                  },
             }}
         >
             {children}
@@ -57,3 +65,6 @@ const AuthProvider = ({ children }) => {
 
 export default AuthProvider
 
+const deleteFirestoreData = (postId) => {
+    db.collection("posts").doc(postId).delete()
+}

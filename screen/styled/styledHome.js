@@ -15,15 +15,15 @@ export const Card = styled.View`
 export const UserInfo = styled.View`
     flex-direction: row;
     justify-content: flex-start;
-    padding-bottom: 8px;
+    padding-vertical: 8px;
     padding-left: 16px;
 
 `
 export const UserImg = styled.Image`
-    width: 45;
+    width: 45px;
     height: 45px;
     border-radius: 50;
-    margin-top: 4px;
+    margin-top: 10px;
 `
 
 export const UserText = styled.View`
@@ -34,6 +34,7 @@ export const UserText = styled.View`
 export const UserName = styled.Text`
     font-size: 14px;
     font-weight: bold;
+    padding: 5px;
 `
 
 export const UserActive = styled.Text`

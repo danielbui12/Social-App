@@ -1,63 +1,80 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Button, SafeAreaView, ScrollView } from 'react-native'
+import { SafeAreaView, ScrollView } from 'react-native'
 import { db } from '../../Constant/firebase'
 import {AuthContext} from '../../Navigation/AuthProvider'
 import Post from '../../Components/Post'
 import LoadingProfile from '../../Components/LoadingProfile'
+import Profile from '../../Components/Profile'
 
-function ProfileScreen() {
+
+function ProfileScreen({ navigation }) {
     const [userPosts, setUserPosts] = useState([])
-    const [isLoading, setIsloading] = useState(true)
-    const { logOut, deletePost, deleting } = useContext(AuthContext)
+    const [isLoading, setIsloading] = useState(false)
+    const { logOut, deletePost, user } = useContext(AuthContext)
 
-    // useEffect(() => {
-    //     let List = []
-    //     const unsubcribe = db.collection('posts').orderBy('postTime', 'desc').where().get().then(snapshot => {
-    //       snapshot.forEach(doc => {
-    //         const { 
-    //           post, 
-    //           postImg, 
-    //           userId,
-    //           userName,
-    //           postTime,
-    //           likes,
-    //           comments,
-    //           userImg,
-    //           liked
-    //         } = doc.data()
+    useEffect(() => {
+        let List = []
+        const unsubcribe = 
+            db.collection('posts')
+                .where('userId', "==", `${user.uid}`)
+                .orderBy('postTime', 'desc')
+                .get()
+                .then(snapshot => {
+          snapshot.forEach(doc => {
+            const { 
+              post, 
+              postImg, 
+              userId,
+              userName,
+              postTime,
+              likes,
+              comments,
+              userImg,
+              liked
+            } = doc.data()
   
-    //         List.push({
-    //           id: doc.id,
-    //           name: userName,
-    //           userImg: userImg,
-    //           userId: userId,
-    //           caption: post,
-    //           img: postImg,
-    //           active: postTime,
-    //           likes: likes,
-    //           liked: liked,
-    //           comment: comments
-    //         })
-    //       })
-    //       setListPost(List)
-    //       if(isLoading) setIsloading(false)
-    //     })
+            List.push({
+              id: doc.id,
+              name: userName,
+              userImg: userImg,
+              userId: userId,
+              caption: post,
+              img: postImg,
+              active: postTime,
+              likes: likes,
+              liked: liked,
+              comment: comments
+            })
+          })
+          setUserPosts(List)
+          if(isLoading) setIsloading(false)
+        })
   
-    //     // return unsubcribe
-    //   },[userPosts])
+        // return unsubcribe
+      },[userPosts])
+
+    const editProfile = () => {
+        navigation.navigate("Edit")
+    }
+
     if(isLoading)   return (
         <LoadingProfile />
     )
 
     return (
-        <SafeAreaView style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}}>
             <ScrollView>
-            
-            {userPosts.map(( item ) => (
-                <Post key={item.id} item={item} onDeletePost={deletePost}/>
-            ))}
+                <Profile 
+                    photoURL={user.photoURL}
+                    name={user.displayName}
+                    uid={user.uid}
+                    editProfile={editProfile}
+                    logOut={logOut}
+                />
+                {userPosts.map(( item ) => (
+                    <Post key={item.id} item={item} onDeletePost={deletePost}/>
+                ))}
             </ScrollView>
-            <Button title="log out" onPress={logOut} />
         </SafeAreaView>
     )
 }
