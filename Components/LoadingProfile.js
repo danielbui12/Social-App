@@ -5,7 +5,7 @@ import { SCREEN_WIDTH } from '../ultis/Dimentions'
 
 export default LoadingProfile = () => {
     return (
-        <ScrollView style={{flex:1}} contentContainerStyle={{alignItems: 'center'}}>
+        <ScrollView style={{flex:1}} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems: 'center'}}>
             <View style={{marginTop: 50}}/>
             <SkeletonPlaceholder>
                 <View style={{justifyContent: "center", alignItems:'center', marginTop: 16, marginBottom: 40}}>

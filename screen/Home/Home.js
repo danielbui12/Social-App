@@ -55,9 +55,10 @@ export default HomeScreen = ({ navigation }) => {
       // return unsubcribe
     },[listPost])
 
-    const onSeeProfile = () => {
+    const onSeeProfile = (userName) => {
+      // console.log(listPost[0])
       navigation.navigate("OtherProfile", {
-        userName: "SADASDASD",
+        userName: userName
       })
     }
 
@@ -91,7 +92,7 @@ export default HomeScreen = ({ navigation }) => {
           </UserStatus>
           {
             listPost.map((item) => (
-              <Post key={item.id} item={item} onDeletePost={deletePost} onSeeProfile={onSeeProfile}/>
+              <Post key={item.id} item={item} onDeletePost={deletePost} onSeeProfile={() => onSeeProfile(item.name)}/>
             ))
           }
         </ScrollView>

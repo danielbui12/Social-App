@@ -4,7 +4,7 @@ import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from '../ultis/Dimentions'
 export default Loading = () => {
     return (
-        <ScrollView style={{flex:1}} contentContainerStyle={{alignItems: 'center'}}>
+        <ScrollView style={{flex:1}} showsVerticalScrollIndicator={false} contentContainerStyle={{alignItems: 'center'}}>
             <View style={{marginTop: 20}}/>
             <SkeletonPlaceholder>
                 <View style={{ flexDirection: "row", alignItems: 'center'}}>

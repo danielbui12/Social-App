@@ -1,14 +1,22 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useLayoutEffect } from 'react'
 import { Button, SafeAreaView, ScrollView } from 'react-native'
 import { db } from '../../Constant/firebase'
 import {AuthContext} from '../../Navigation/AuthProvider'
 import Post from '../../Components/Post'
 import LoadingProfile from '../../Components/LoadingProfile'
 
-function OtherProfile() {
+function OtherProfile({ navigation, route }) {
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setIsloading] = useState(true)
     const { logOut, deletePost, deleting } = useContext(AuthContext)
+
+    const  userName  = route.parrams
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerTitle: `${userName}`
+        })
+    }, [navigation])
 
     // useEffect(() => {
     //     let List = []

@@ -79,7 +79,7 @@ export default PostScreen = ({ navigation }) => {
         postImg: imageUrl,
         postTime: Date.now(),
         likes: 0,
-        liked: {},
+        liked: [],
         comments: 0
       }).then(() => {
         Alert.alert("Successful!", "Your post has been uploaded!")

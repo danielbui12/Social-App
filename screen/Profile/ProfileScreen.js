@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { SafeAreaView, ScrollView } from 'react-native'
+import { Alert, SafeAreaView, ScrollView } from 'react-native'
 import { db } from '../../Constant/firebase'
 import {AuthContext} from '../../Navigation/AuthProvider'
 import Post from '../../Components/Post'
@@ -48,7 +48,7 @@ function ProfileScreen({ navigation }) {
           })
           setUserPosts(List)
           if(isLoading) setIsloading(false)
-        })
+        }).catch(err => console.log(err))
   
         // return unsubcribe
       },[userPosts])
