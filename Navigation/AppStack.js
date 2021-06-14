@@ -21,7 +21,7 @@ export default function AppStack() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarVisible: getTabBarVisible(route),
-          tabBarIcon: ({ focused, color, size }) => {
+          tabBarIcon: ({ focused, color }) => {
             let iconName;
 
             if (route.name === 'Story') {
@@ -39,7 +39,7 @@ export default function AppStack() {
             }
 
             // You can return any component that you like here!
-            return <Icon name={iconName} size={size} color={color} />;
+            return <Icon name={iconName} size={30} color={color} />;
           },
         })}
         tabBarOptions={{
@@ -47,9 +47,9 @@ export default function AppStack() {
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="Story" component={StoryScreen} />
-        <Tab.Screen name="Chat" component={ChatScreen} />
-        <Tab.Screen name="Profile" component={SettingScreen} />
+        <Tab.Screen name="Story" component={StoryScreen} options={{tabBarLabel:() => null}} />
+        <Tab.Screen name="Chat" component={ChatScreen}  options={{tabBarLabel:() => null}} />
+        <Tab.Screen name="Profile" component={SettingScreen} options={{tabBarLabel:() => null}}  />
       </Tab.Navigator>
   );
 }

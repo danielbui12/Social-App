@@ -17,7 +17,7 @@ const StoryScreen = () => {
         }}
       />
       <Stack.Screen name="Post" component={PostScreen} options={{headerBackTitleVisible: false}}/>
-      <Stack.Screen name="OtherProfile" component={OtherProfile} options={{headerBackTitleVisible: false}}/>
+      <Stack.Screen name="OtherProfile" component={OtherProfile} options={{ headerBackTitleVisible: false}}/>
     </Stack.Navigator>
   )
 }

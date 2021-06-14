@@ -6,7 +6,7 @@ import {
     TextStatusWrapper,
     TextStatus
  } from '../styled/styledHome'
-import { ScrollView, ActivityIndicator } from 'react-native'
+import { ScrollView, ActivityIndicator, Alert } from 'react-native'
 import Post from "../../Components/Post"
 import { auth, db } from '../../Constant/firebase'
 import { Ionicons } from 'react-native-vector-icons'
@@ -55,10 +55,11 @@ export default HomeScreen = ({ navigation }) => {
       // return unsubcribe
     },[listPost])
 
-    const onSeeProfile = (userName) => {
-      // console.log(listPost[0])
+    const onSeeProfile = (usreName, photoURL, userId) => {
       navigation.navigate("OtherProfile", {
-        userName: userName
+        userName: usreName,
+        photoURL: photoURL,
+        uid: userId
       })
     }
 
@@ -70,8 +71,6 @@ export default HomeScreen = ({ navigation }) => {
 
     return (
       <Container>
-          
-
         {deleting  && 
           <ActivityIndicator 
           style={{
@@ -92,7 +91,7 @@ export default HomeScreen = ({ navigation }) => {
           </UserStatus>
           {
             listPost.map((item) => (
-              <Post key={item.id} item={item} onDeletePost={deletePost} onSeeProfile={() => onSeeProfile(item.name)}/>
+              <Post key={item.id} item={item} onDeletePost={deletePost} onSeeProfile={() => onSeeProfile(item.name, item.userImg, item.userId)}/>
             ))
           }
         </ScrollView>

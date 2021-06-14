@@ -19,8 +19,10 @@ const Profile = ({
     editProfile, 
     enterChat, 
     ViewProfile, 
-    logOut
+    logOut,
+    length
 }) => {
+
     return (
         <>
         <UserImg source={{uri: photoURL}}/>
@@ -38,7 +40,7 @@ const Profile = ({
 
                 <UserInfoWrapper>
                     <UserInfoItem>
-                        <Number>5</Number>
+                        <Number>{!length ? "0" : `${length}`}</Number>
                         <Content>Post</Content>
                     </UserInfoItem>
                     <UserInfoItem>

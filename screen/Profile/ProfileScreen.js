@@ -70,6 +70,7 @@ function ProfileScreen({ navigation }) {
                     uid={user.uid}
                     editProfile={editProfile}
                     logOut={logOut}
+                    length={userPosts.length}
                 />
                 {userPosts.map(( item ) => (
                     <Post key={item.id} item={item} onDeletePost={deletePost}/>

@@ -82,7 +82,7 @@ export const UserStatus = styled.View`
     flex-direction: row;
     width: 100%;
     margin-vertical: 24px;
-    background-color: #eee;
+    background-color: #fff;
 `
 export const Avartar = styled.Image`
     width: 50px;
@@ -94,6 +94,13 @@ export const Avartar = styled.Image`
 export const TextStatusWrapper = styled.TouchableOpacity`
     flex-direction: row;
     align-self: center;
+    align-items:center;
+    justify-content: center;
+    border-width: 1px;
+    border-radius: 20;
+    height: 70%;
+    width: 80%;
+    border-color: #eee;
 `
 
 export const TextStatus = styled.Text`
