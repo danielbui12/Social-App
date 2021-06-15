@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { TouchableOpacity, Text, StyleSheet, KeyboardAvoidingView, Platform, View } from 'react-native'
 import FormInput from '../../Components/FormInput'
-import { auth } from '../../Constant/firebase'
+import { auth, db } from '../../Constant/firebase'
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('')
@@ -10,10 +10,16 @@ export default function LoginScreen({ navigation }) {
 
     const register = () =>{ 
         auth.createUserWithEmailAndPassword(email, pass)
-        .then(authUser => {
-            authUser.user.updateProfile({
-                displayName: name,
-                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6",
+        .then(() => {
+            db.collection("users").doc(auth.currentUser.uid).add({
+                fname: '',
+                lname: '',
+                timestamp: Date.now(),
+                userImg: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6",
+                phone: '',
+                history: '',
+                city: '',
+                country: '',
             })
         }).catch(err => {
             console.log(err)

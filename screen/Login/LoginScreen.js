@@ -47,23 +47,6 @@ export default function LoginScreen({ navigation }) {
                 <Text style={styles.navButtonText}>Forgot Password ?</Text>
             </TouchableOpacity>
 
-            <SocialButton 
-                buttonTitle="Sign In with GitHub"
-                buttonName="github"
-                color="#fff"
-                backgroundColor="#23282c"
-                onPress={() => {}}
-            />
-
-            <SocialButton 
-                buttonTitle="Sign In with Google"
-                buttonName="google"
-                color="#de4d41"
-                backgroundColor="#f5e7ea"
-                onPress={() => {}}
-            />
-            
-
             <TouchableOpacity style={styles.forgotButton} onPress={() => navigation.navigate('Signup')}>
                 <Text style={styles.navButtonText}>Don't have an account? Create One!</Text>
             </TouchableOpacity>

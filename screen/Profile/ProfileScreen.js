@@ -51,7 +51,7 @@ function ProfileScreen({ navigation }) {
         }).catch(err => console.log(err))
   
         // return unsubcribe
-      },[userPosts])
+      },[])
 
     const editProfile = () => {
         navigation.navigate("Edit")
