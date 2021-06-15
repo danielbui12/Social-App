@@ -7,9 +7,9 @@ import {
 } from "../styled/styledHome"
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as ImagePicker from 'expo-image-picker';
 import { storage, db, auth } from '../../Constant/firebase'
 import { AuthContext } from '../../Navigation/AuthProvider'
+import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions'
 
 export default PostScreen = ({ navigation }) => {
