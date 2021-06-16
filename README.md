@@ -3,6 +3,9 @@ a clone of social app
 
 It's a demo of social app so it still has a bit bug and doesn't have much fearture.
 
+Front-end: React Native
+Back-end: Firebase
+
 # Run app
 
 - step1: Make sure you run `npm install`
