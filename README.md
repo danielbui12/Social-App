@@ -1,4 +1,4 @@
-## Elizabeth
+# Elizabeth
 a clone of social app
 
 It's a demo of social app so it still has a bit bug and doesn't have much fearture.
@@ -6,7 +6,7 @@ It's a demo of social app so it still has a bit bug and doesn't have much feartu
 - Front-end: React Native
 - Back-end: Firebase
 
-# Run app
+## Run app
 
 - step1: Make sure you run `npm install`
 - step2: run this project `npm start` and enjoy it.
