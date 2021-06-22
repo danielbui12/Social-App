@@ -7,7 +7,7 @@ import { auth } from '../Constant/firebase'
 const Routes = () => {
     const {user, setUser} = useContext(AuthContext)
     const [initialize, setInitialize] = useState(true)
-
+    
     const onAuthStateChanged = (user) => {
         setUser(user)
         setInitialize(false)

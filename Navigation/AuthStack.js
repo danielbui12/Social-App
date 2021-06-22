@@ -16,9 +16,9 @@ function AuthStack() {
       if(value == null) {
         AsyncStorage.setItem('alreadyLauched', 'true')
         setIsFirstLaunch(true)
-      } else setIsFirstLaunch(false)
+      } else if( value == true) setIsFirstLaunch(false)
     })
-  }, [])
+  },[])
 
 
   if (isFirstLaunch == true) {

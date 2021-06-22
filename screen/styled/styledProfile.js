@@ -6,6 +6,8 @@ export const UserImg = styled.Image`
     border-radius: 80;
     margin-vertical: 17px; 
     align-self: center;
+    border-width: 1px;
+    border-color: #eee;
 `
 
 export const UserName = styled.Text`

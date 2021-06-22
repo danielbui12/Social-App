@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { 
     TouchableOpacity, 
     Text, 
@@ -33,17 +33,7 @@ const EditScreen = () => {
         .collection("users")
         .doc(auth.currentUser.uid)
         .get().then(snapshot => setUserData(snapshot.data()))
-        .catch(err => console.log(err))
-        .then(() => {
-            const { fname, lname, history, userImg, phone, country, city } = userData
-            setFirstName(fname)
-            setLastName(lname)
-            setPhone(phone)
-            setCountry(country)
-            setCity(city)
-            setHistory(history)
-            setImage(userImg)
-        })
+        .catch(err => Alert.alert(err.message))
     }
 
     const handleUpdate = async () => {
@@ -146,9 +136,9 @@ const EditScreen = () => {
             >
                 <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss}>
                     <TouchableOpacity onPress={changeImg}>
-                        <UserImg source={{uri: image}}/>
+                        <UserImg source={!image ? {uri: auth.currentUser.photoURL} : image}/>
                     </TouchableOpacity>
-                    <UserName>{firstName += lastName}</UserName>
+                    <UserName>{firstName}  {lastName}</UserName>
                     <FormInput 
                         iconName={"user"}
                         labelVal={firstName} 
@@ -169,19 +159,19 @@ const EditScreen = () => {
                         keyboardType={"numeric"}
                     />
                     <FormInput 
-                        iconName={"user"}
+                        iconName={"form"}
                         labelVal={history}
                         placeholder="about you"
                         onChangeText={(text) => setHistory(text)}
                     />
                     <FormInput 
-                        iconName={"City"}
+                        iconName={"home"}
                         labelVal={city} 
                         placeholder="city"
                         onChangeText={(text) => setCity(text)}
                     />
                     <FormInput 
-                        iconName={"Country"}
+                        iconName={"earth"}
                         placeholder="country"
                         labelVal={country} 
                         onChangeText={(text) => setCountry(text)}
