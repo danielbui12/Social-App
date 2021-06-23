@@ -22,4 +22,6 @@ It's a demo of social app so it still has a bit bug and doesn't have much feartu
 
 ![193851504_488223759063018_5464893807433456085_n](https://user-images.githubusercontent.com/79790753/122152871-1a7bdb00-ce8c-11eb-9ba5-fcd405671bf4.jpg)
 
+![image](https://user-images.githubusercontent.com/79790753/123098118-00796400-d45b-11eb-9c47-f96632c3e067.png)
+
 
