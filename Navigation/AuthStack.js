@@ -18,7 +18,7 @@ function AuthStack() {
         setIsFirstLaunch(true)
       } else if( value == true) setIsFirstLaunch(false)
     })
-  },[])
+  },[isFirstLaunch])
 
 
   if (isFirstLaunch == true) {

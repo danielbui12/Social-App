@@ -8,12 +8,12 @@ export default function LoginScreen({ navigation }) {
     const [pass, setPass] = useState('')
     const [name, setName] = useState('')
     const [phone, setPhone] = useState("")
-
+    const defaultImg = "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6"
     const register = () =>{ 
         auth.createUserWithEmailAndPassword(email, pass).then((authUser) => {
             auth.updateCurrentUser({
                 displayName: name,
-                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6",
+                photoURL: defaultImge,    
                 phoneNumber: phone
 
             })
@@ -22,8 +22,8 @@ export default function LoginScreen({ navigation }) {
         db.collection('users').doc(auth.currentUser.uid).add({
             fname: '',
             lname: '',
-            phone: auth.currentUser.phoneNumber,
-            userImg: auth.currentUser.photoURL,
+            phone: phone,
+            userImg: defaultImge,
             history: "",
             city: '',
             country: '',
