@@ -1,4 +1,5 @@
 import React from 'react'
+import { View } from 'react-native'
 import { auth } from '../Constant/firebase'
 import {
     UserImg,
@@ -14,20 +15,26 @@ import {
 } from '../screen/styled/styledProfile'
 const Profile = ({ 
     photoURL, 
-    name, 
+    fname, 
+    lname,
     uid, 
     editProfile, 
     enterChat, 
     ViewProfile, 
     logOut,
-    length
+    length,
+    history
 }) => {
 
     return (
         <>
         <UserImg source={{uri: photoURL}}/>
-                <UserName>{name}</UserName>
-                <UserHistory>...</UserHistory>
+        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+                <UserName>{fname}  </UserName>
+                <UserName>{lname}</UserName>
+
+        </View>
+                <UserHistory>{history ? history : "..."}</UserHistory>
 
                 <UserButtonWrapper>
                     <ProfileButton onPress={uid == auth.currentUser.uid ? editProfile : ViewProfile}>

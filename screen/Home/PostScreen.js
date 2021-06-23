@@ -17,7 +17,7 @@ export default PostScreen = ({ navigation }) => {
     const [image, setImage] = useState(null);
     const [uploading, setUpLoading] = useState(false)
 
-    const { user } = useContext(AuthContext)
+    const { user, userData } = useContext(AuthContext)
   
     let styles = {
       fontSize: 20,
@@ -72,8 +72,9 @@ export default PostScreen = ({ navigation }) => {
       setUpLoading(true)
 
       db.collection('posts').add({
-        userName: auth.currentUser.displayName,
-        userImg: auth.currentUser.photoURL,
+        fname: userData.fname,
+        lname: userData.lname,
+        userImg: userData.userImg,
         userId: user.uid,
         post: userStt,
         postImg: imageUrl,

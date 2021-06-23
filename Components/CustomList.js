@@ -9,8 +9,9 @@ import {Card,
     PostTime,
     MessageText
 } from '../screen/styled/styledChat'
+import moment from 'moment'
 
-const CustomList = ({chatName, id, enterChat}) => {
+const CustomList = ({chatName, time, id, enterChat}) => {
     return (
         <Card key={id} onPress={() => enterChat(id, chatName)}>
             <UserInfo>
@@ -20,9 +21,9 @@ const CustomList = ({chatName, id, enterChat}) => {
                 <TextSection>
                     <UserInfoText>
                         <UserName>{chatName}</UserName>
-                        <PostTime>4 hours ago</PostTime>
+                        <PostTime>{moment(time).fromNow()}</PostTime>
                     </UserInfoText>
-                    <MessageText>Last message ....</MessageText>
+                    <MessageText>New message !</MessageText>
                 </TextSection>
             </UserInfo>
         </Card>

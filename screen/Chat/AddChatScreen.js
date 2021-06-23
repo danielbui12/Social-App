@@ -16,7 +16,8 @@ const AddChatScreen = ({ navigation }) => {
 
     const createChat = async () => {
         await db.collection("chats").add({
-            chatName: input
+            chatName: input,
+            timestamp: Date.now()
         }).then(() => {
             navigation.goBack()
         })

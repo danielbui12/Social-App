@@ -5,12 +5,12 @@ import {AuthContext} from '../../Navigation/AuthProvider'
 import Post from '../../Components/Post'
 import LoadingProfile from '../../Components/LoadingProfile'
 import Profile from '../../Components/Profile'
-
+import CustomStatusBar from '../../Components/CustomStatusBar'
 
 function ProfileScreen({ navigation }) {
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setIsloading] = useState(false)
-    const { logOut, deletePost, user } = useContext(AuthContext)
+    const { logOut, deletePost, user, userData } = useContext(AuthContext)
 
     useEffect(() => {
         let List = []
@@ -65,13 +65,16 @@ function ProfileScreen({ navigation }) {
         <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}}>
             <ScrollView>
                 <Profile 
-                    photoURL={user.photoURL}
-                    name={user.displayName}
+                    photoURL={userData.userImg}
+                    fname={userData.fname}
+                    lname={userData.lname}
                     uid={user.uid}
+                    history={userData.history}
                     editProfile={editProfile}
                     logOut={logOut}
                     length={userPosts.length}
                 />
+                <CustomStatusBar imageUrl={userData.userImg} onMoving={() => navigation.navigate("Post")}/>
                 {userPosts.map(( item ) => (
                     <Post key={item.id} item={item} onDeletePost={deletePost}/>
                 ))}

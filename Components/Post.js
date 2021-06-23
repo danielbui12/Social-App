@@ -43,7 +43,7 @@ const Post = ({ item, onDeletePost, onSeeProfile }) => {
       <UserInfo>
         <UserImg source={{uri: item.userImg}} />
         <UserText>
-          <UserName onPress={onSeeProfile}>{item.name}</UserName>
+          <UserName onPress={onSeeProfile}>{item.fname}  {item.lname}</UserName>
           
           <UserActive>{moment(item.active).fromNow()}</UserActive>
         </UserText>

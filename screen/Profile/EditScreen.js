@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { 
-    TouchableOpacity, 
-    Text, 
-    View, 
-    KeyboardAvoidingView, 
-    Platform, 
+    TouchableOpacity,
+    View,
     Keyboard,
     ScrollView,
     Alert
@@ -16,43 +13,27 @@ import { SCREEN_WIDTH } from '../../ultis/Dimentions'
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions'
 import { auth, db } from '../../Constant/firebase'
+import { AuthContext } from '../../Navigation/AuthProvider'
 
 const EditScreen = () => {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [history, setHistory] = useState('')
-    const [city, setCity] = useState('')
-    const [country, setCountry] = useState('')
     const [image, setImage] = useState(null)
-    const [userData, setUserData] = useState(null)
+    const {userData, setUserData} = useContext(AuthContext)
     
 
-    const getUser = async () => {
-        await db
-        .collection("users")
-        .doc(auth.currentUser.uid)
-        .get().then(snapshot => setUserData(snapshot.data()))
-        .catch(err => Alert.alert(err.message))
-    }
 
     const handleUpdate = async () => {
         const imageUrl = await uploadImg()
-        
-        setUpLoading(true)
 
         db.collection('users').doc(auth.currentUser.uid).update({
-                fname: firstName,
-                lname: lastName,
-                userImg: imageUrl,
-                phone: phone,
-                history: history,
-                city: city,
-                country: country,
+                fname: userData.fname,
+                lname: userData.lname,
+                userImg: imageUrl ? imageUrl : userData.userImg,
+                phone: userData.phone,
+                history: userData.history,
+                city: userData.city,
+                country: userData.country,
           }).then(() => {
             Alert.alert("Successful!", "Your profile has been uploaded!")
-            setImage(null)
-            setUpLoading(false)
           }).catch(err => Alert.alert("Something went wrong!"))
     }
 
@@ -68,9 +49,9 @@ const EditScreen = () => {
       try {
         const response = await fetch(image)
         const blob = await response.blob()
-        await storage.ref().child(`${auth.currentUser.uid}/posts/${fileName}`).put(blob)
+        await storage.ref().child(`${auth.currentUser.uid}/avartar/${fileName}`).put(blob)
 
-        var ref = storage.ref().child(`${auth.currentUser.uid}/posts/${fileName}`).put(blob)
+        var ref = storage.ref().child(`${auth.currentUser.uid}/avartar/${fileName}`).put(blob)
         newImageUri = await ref.snapshot.ref.getDownloadURL()
         return newImageUri
       } catch(err) {
@@ -105,8 +86,6 @@ const EditScreen = () => {
       if (!result.cancelled) {
         setImage(result.uri);
       }
-  
-      // console.log(result)
     }
 
     const changeImg = () => {
@@ -120,14 +99,10 @@ const EditScreen = () => {
                 onPress: takePhoto
             },
             {
-                text: 'Cancle'
+                text: 'Cancel'
             }
         ])
     }
-
-    useEffect(() => {
-        getUser()
-    }, [])
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -136,45 +111,45 @@ const EditScreen = () => {
             >
                 <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss}>
                     <TouchableOpacity onPress={changeImg}>
-                        <UserImg source={!image ? {uri: auth.currentUser.photoURL} : image}/>
+                        <UserImg source={{uri : image ?  image : userData.userImg}}/>
                     </TouchableOpacity>
-                    <UserName>{firstName}  {lastName}</UserName>
+                    <UserName>{userData ? userData.fname : ""} {userData ? userData.lname : ""}</UserName>
                     <FormInput 
                         iconName={"user"}
-                        labelVal={firstName} 
+                        labelVal={userData ? userData.fname : ""} 
                         placeholder="first name"
-                        onChangeText={(text) => setFirstName(text)}
+                        onChangeText={(text) => setUserData({...userData, fname: text})}
                     />
                     <FormInput 
                         iconName={"user"}
-                        labelVal={lastName} 
+                        labelVal={userData ? userData.lname : ""} 
                         placeholder="last name"
-                        onChangeText={(text) => setLastName(text)}
+                        onChangeText={(text) => setUserData({...userData, lname: text})}
                     />
                     <FormInput
                         iconName={"phone"}
-                        labelVal={phone} 
+                        labelVal={userData ? userData.phone : ""} 
                         placeholder="phone number"
-                        onChangeText={(text) => setPhone(text)}
-                        keyboardType={"numeric"}
+                        onChangeText={(text) => setUserData({...userData, phone: text})}
+                        keyboardType="numeric"
                     />
                     <FormInput 
                         iconName={"form"}
-                        labelVal={history}
+                        labelVal={userData? userData.history : ""}
                         placeholder="about you"
-                        onChangeText={(text) => setHistory(text)}
+                        onChangeText={(text) => setUserData({...userData, history: text})}
                     />
                     <FormInput 
                         iconName={"home"}
-                        labelVal={city} 
+                        labelVal={userData ? userData.city : ""} 
                         placeholder="city"
-                        onChangeText={(text) => setCity(text)}
+                        onChangeText={(text) => setUserData({...userData, city: text})}
                     />
                     <FormInput 
                         iconName={"earth"}
                         placeholder="country"
-                        labelVal={country} 
-                        onChangeText={(text) => setCountry(text)}
+                        labelVal={userData ? userData.country : ""} 
+                        onChangeText={(text) => setUserData({...userData, country: text})}
                     />
                     
 

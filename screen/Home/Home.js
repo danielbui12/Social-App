@@ -12,12 +12,14 @@ import { auth, db } from '../../Constant/firebase'
 import { Ionicons } from 'react-native-vector-icons'
 import Loading from '../../Components/Loading'
 import { AuthContext } from '../../Navigation/AuthProvider'
+import { defaultImg } from '../Login/SingupScreen'
+import CustomStatusBar from '../../Components/CustomStatusBar'
 
 
 export default HomeScreen = ({ navigation }) => {
     const [listPost, setListPost] = useState([])
     const [isLoading, setIsloading] = useState(true)
-    const { deleting, deletePost } = useContext(AuthContext)
+    const { deleting, deletePost, userData } = useContext(AuthContext)
 
     useEffect(() => {
       let List = []
@@ -63,6 +65,10 @@ export default HomeScreen = ({ navigation }) => {
       })
     }
 
+    const onMoving = () => {
+      navigation.navigate("Post")
+    }
+
     if(isLoading) {
       return (
         <Loading />
@@ -82,17 +88,18 @@ export default HomeScreen = ({ navigation }) => {
         }
 
         <ScrollView style={{width: "90%"}} showsVerticalScrollIndicator={false}>
-          <UserStatus>
-            <Avartar source={{ uri: auth.currentUser.photoURL }} />
+          {/* <UserStatus>
+            <Avartar source={{ uri: userData ? userData.userImg : defaultImg }} />
             <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
               <TextStatus>What's on your mind ... ?</TextStatus>
               <Ionicons name="send" size={24} color="#346eeb"/>
-          </TextStatusWrapper>
-          </UserStatus>
+            </TextStatusWrapper>
+          </UserStatus> */}
+          <CustomStatusBar imageUrl={  userData ? userData.userImg : defaultImg } onMoving={onMoving}/>
           {
-            listPost.map((item) => (
+            listPost[0] ? listPost.map((item) => (
               <Post key={item.id} item={item} onDeletePost={deletePost} onSeeProfile={() => onSeeProfile(item.name, item.userImg, item.userId)}/>
-            ))
+            )) : (<TextStatus>How are you today ?</TextStatus>)
           }
         </ScrollView>
       </Container>

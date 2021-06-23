@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react'
-import { ScrollView, TouchableOpacity, Alert } from 'react-native'
-import { Container } from '../styled/styledChat'
+import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { Container, UserName } from '../styled/styledChat'
 import { auth, db } from '../../Constant/firebase'
 import { SimpleLineIcons as Icon } from 'react-native-vector-icons'
 import CustomList from '../../Components/CustomList'
@@ -21,7 +21,7 @@ const MessageList = ({ navigation }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerTitleStyle: { fontSize: 22},
+            headerTitleStyle: { fontSize: 22 },
             headerBackTitleVisible: false,
             headerRight: () => (
                 <TouchableOpacity 
@@ -44,9 +44,15 @@ const MessageList = ({ navigation }) => {
     return(
         <Container>
             <ScrollView>
-                {messageList.map(({ id, data: { chatName }}) => (
-                    <CustomList key={id} id={id} chatName={chatName} enterChat={enterChat}/>
-                ))}
+                { 
+                    messageList[0] ? messageList.map(({ id, data: { chatName, timestamp }}) => (
+                        <CustomList key={id} id={id} chatName={chatName} time={timestamp} enterChat={enterChat}/>
+                    )) : (
+                        <View style={{alignSelf: 'center', top: 100}}>
+                            <UserName>Add some new chats ?</UserName>
+                        </View>
+                    )
+                }
             </ScrollView>
         </Container>
     )
