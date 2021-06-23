@@ -88,13 +88,6 @@ export default HomeScreen = ({ navigation }) => {
         }
 
         <ScrollView style={{width: "90%"}} showsVerticalScrollIndicator={false}>
-          {/* <UserStatus>
-            <Avartar source={{ uri: userData ? userData.userImg : defaultImg }} />
-            <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
-              <TextStatus>What's on your mind ... ?</TextStatus>
-              <Ionicons name="send" size={24} color="#346eeb"/>
-            </TextStatusWrapper>
-          </UserStatus> */}
           <CustomStatusBar imageUrl={  userData ? userData.userImg : defaultImg } onMoving={onMoving}/>
           {
             listPost[0] ? listPost.map((item) => (

@@ -34,9 +34,9 @@ export default function LoginScreen({ navigation }) {
                     labelVal={email}
                     placeholder='Email'
                     onChangeText={userEmail => setEmail(userEmail)}
-                    keyBoardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
+                    keyboardType="email-address"
                 />
 
                 <FormInput 
@@ -70,9 +70,9 @@ export default function LoginScreen({ navigation }) {
                     labelVal={phone}
                     placeholder='phone'
                     onChangeText={phone => setPhone(phone)}
-                    keyBoardType="numeric"
                     autoCapitalize="none"
                     autoCorrect={false}
+                    keyboardType="numeric"
                 />
                 
                 

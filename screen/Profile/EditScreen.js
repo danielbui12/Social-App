@@ -12,7 +12,7 @@ import { UserImg, UserName } from '../styled/styledProfile'
 import { SCREEN_WIDTH } from '../../ultis/Dimentions'
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions'
-import { auth, db } from '../../Constant/firebase'
+import { auth, db, storage } from '../../Constant/firebase'
 import { AuthContext } from '../../Navigation/AuthProvider'
 
 const EditScreen = () => {
@@ -23,7 +23,7 @@ const EditScreen = () => {
 
     const handleUpdate = async () => {
         const imageUrl = await uploadImg()
-
+        Alert.alert(imageUrl)
         db.collection('users').doc(auth.currentUser.uid).update({
                 fname: userData.fname,
                 lname: userData.lname,
@@ -38,27 +38,28 @@ const EditScreen = () => {
     }
 
     const uploadImg = async () => {
-      if(!image) return null
-
-      let fileName = image.substring(image.lastIndexOf("/") + 1);
-      const extension = fileName.split(".").pop(); //duoi file
-      const name = fileName.split(".").slice(0,-1).join(".");
-      fileName = name + Date.now() + "." + extension;
+        if(!image) return null
   
-      let newImageUri
-      try {
-        const response = await fetch(image)
-        const blob = await response.blob()
-        await storage.ref().child(`${auth.currentUser.uid}/avartar/${fileName}`).put(blob)
-
-        var ref = storage.ref().child(`${auth.currentUser.uid}/avartar/${fileName}`).put(blob)
-        newImageUri = await ref.snapshot.ref.getDownloadURL()
-        return newImageUri
-      } catch(err) {
-        console.log(err)
-        return null
+        let fileName = image.substring(image.lastIndexOf("/") + 1);
+        const extension = fileName.split(".").pop(); //duoi file
+        const name = fileName.split(".").slice(0,-1).join(".");
+        fileName = name + Date.now() + "." + extension;
+    
+        let newImageUri
+        try {
+          const response = await fetch(image)
+          const blob = await response.blob()
+          await storage.ref().child(`${auth.currentUser.uid}/avartar/${fileName}`).put(blob)
+  
+          var ref = storage.ref().child(`${auth.currentUser.uid}/avartar/${fileName}`).put(blob)
+          newImageUri = await ref.snapshot.ref.getDownloadURL()
+          Alert.alert(newImageUri)
+          return newImageUri
+        } catch(err) {
+          console.log(err)
+          return null
+        }
       }
-    }
 
 
     const takePhoto = async () => {

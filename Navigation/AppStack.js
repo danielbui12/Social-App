@@ -12,7 +12,7 @@ import { AuthContext } from './AuthProvider';
 const Tab = createBottomTabNavigator()
 
 export default function AppStack() {
-  const { setUserData } = React.useContext(AuthContext)
+  const { userData, setUserData } = React.useContext(AuthContext)
 
   const getTabBarVisible = (route) => {
     const routeName = getFocusedRouteNameFromRoute(route)
@@ -34,7 +34,7 @@ export default function AppStack() {
 
   React.useEffect(() => {
     getUser()
-  }, [])
+  }, [userData.userImg])
 
   return (
       <Tab.Navigator

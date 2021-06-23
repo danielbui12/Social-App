@@ -73,14 +73,13 @@ export default PostScreen = ({ navigation }) => {
 
       db.collection('posts').add({
         fname: userData.fname,
-        lname: userData.lname,
+        lastName: userData.lname,
         userImg: userData.userImg,
         userId: user.uid,
         post: userStt,
         postImg: imageUrl,
         postTime: Date.now(),
         likes: 0,
-        liked: [],
         comments: 0
       }).then(() => {
         Alert.alert("Successful!", "Your post has been uploaded!")
