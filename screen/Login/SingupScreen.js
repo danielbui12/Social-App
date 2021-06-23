@@ -6,27 +6,21 @@ import { auth, db } from '../../Constant/firebase'
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('')
     const [pass, setPass] = useState('')
-    const [name, setName] = useState('')
+    const [fname, setFName] = useState('')
+    const [lname, setLName] = useState('')
     const [phone, setPhone] = useState("")
 
     const register = () =>{ 
-        auth.createUserWithEmailAndPassword(email, pass).then((authUser) => {
-            auth.updateCurrentUser({
-                displayName: name,
-                photoURL: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6",
-                phoneNumber: phone
-
+        auth.createUserWithEmailAndPassword(email, pass).then(() => {
+            db.collection('users').doc(auth.currentUser.uid).set({
+                fname: fname,
+                lname: lname,
+                phone: phone,
+                userImg: "https://firebasestorage.googleapis.com/v0/b/storageuser-41682.appspot.com/o/default-avartar.png?alt=media&token=0906739a-83ae-40d9-80a6-b3e345dd03e6",
+                history: "",
+                city: '',
+                country: '',
             })
-        })
-
-        db.collection('users').doc(auth.currentUser.uid).add({
-            fname: '',
-            lname: '',
-            phone: auth.currentUser.phoneNumber,
-            userImg: auth.currentUser.photoURL,
-            history: "",
-            city: '',
-            country: '',
         })
     }
 
@@ -34,37 +28,46 @@ export default function LoginScreen({ navigation }) {
         <KeyboardAvoidingView behavior={ Platform.OS == 'ios' ? 'padding' :"height"} style={styles.container}>
                 <Text style={styles.text}>Create an account</Text>
                 <FormInput
-                    labelVal={email}
-                    onChangeText={userEmail => setEmail(userEmail)}
-                    placeholder='Email'
                     iconName='user'
+                    labelVal={email}
+                    placeholder='Email'
+                    onChangeText={userEmail => setEmail(userEmail)}
                     keyBoardType="email-address"
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
 
                 <FormInput 
-                    labelVal={pass}
-                    onChangeText={userPass => setPass(userPass)}
-                    placeholder='Password'
                     iconName='lock'
+                    labelVal={pass}
+                    placeholder='Password'
+                    onChangeText={userPass => setPass(userPass)}
                     secureTextEntry={true}
                 />
 
                 <FormInput
-                    labelVal={name}
-                    onChangeText={name => setName(name)}
-                    placeholder='Full name'
                     iconName='user'
+                    labelVal={fname}
+                    placeholder='first name'
+                    onChangeText={name => setFName(name)}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                />
+
+                <FormInput
+                    iconName='user'
+                    labelVal={lname}
+                    placeholder='last name'
+                    onChangeText={name => setLName(name)}
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
 
 <               FormInput
-                    labelVal={phone}
-                    onChangeText={phone => setPhone(phone)}
-                    placeholder='phone'
                     iconName='phone'
+                    labelVal={phone}
+                    placeholder='phone'
+                    onChangeText={phone => setPhone(phone)}
                     keyBoardType="numeric"
                     autoCapitalize="none"
                     autoCorrect={false}

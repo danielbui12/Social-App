@@ -10,7 +10,7 @@ import Profile from '../../Components/Profile'
 function ProfileScreen({ navigation }) {
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setIsloading] = useState(false)
-    const { logOut, deletePost, user } = useContext(AuthContext)
+    const { logOut, deletePost, user, userData } = useContext(AuthContext)
 
     useEffect(() => {
         let List = []
@@ -65,9 +65,11 @@ function ProfileScreen({ navigation }) {
         <SafeAreaView style={{flex: 1, backgroundColor: "#fff"}}>
             <ScrollView>
                 <Profile 
-                    photoURL={user.photoURL}
-                    name={user.displayName}
+                    photoURL={userData.userImg}
+                    fname={userData.fname}
+                    lname={userData.lname}
                     uid={user.uid}
+                    history={userData.history}
                     editProfile={editProfile}
                     logOut={logOut}
                     length={userPosts.length}

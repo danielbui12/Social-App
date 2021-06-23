@@ -17,7 +17,7 @@ import { AuthContext } from '../../Navigation/AuthProvider'
 export default HomeScreen = ({ navigation }) => {
     const [listPost, setListPost] = useState([])
     const [isLoading, setIsloading] = useState(true)
-    const { deleting, deletePost } = useContext(AuthContext)
+    const { deleting, deletePost, userData } = useContext(AuthContext)
 
     useEffect(() => {
       let List = []
@@ -83,7 +83,7 @@ export default HomeScreen = ({ navigation }) => {
 
         <ScrollView style={{width: "90%"}} showsVerticalScrollIndicator={false}>
           <UserStatus>
-            <Avartar source={{ uri: auth.currentUser.photoURL }} />
+            <Avartar source={{ uri: userData.userImg }} />
             <TextStatusWrapper onPress={() => navigation.navigate("Post")}>
               <TextStatus>What's on your mind ... ?</TextStatus>
               <Ionicons name="send" size={24} color="#346eeb"/>

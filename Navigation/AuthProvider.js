@@ -7,12 +7,15 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
     const [deleting, setDeleting] = useState(false)
+    const [userData, setUserData] = useState(null)
     
     return (
         <AuthContext.Provider
             value={{
                 user,
                 setUser,
+                userData,
+                setUserData,
                 login:  (email, password) =>{ 
                     try {
                          auth.signInWithEmailAndPassword(email, password)
